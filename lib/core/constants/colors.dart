@@ -24,4 +24,22 @@ class AppColors {
 
   /// bgLogin = #EDEDED
   static const Color bgLogin = Color(0xffEDEDED);
+
+  /// mainColor
+  static const Color mainColor = Color(0xFFBBB600);
+
+  /// secondaryColor
+  static const Color secondaryColor = Color(0xFFFFCA07);
+
+  /// thirdColor
+  static const Color thirdColor = Color(0xFF51B1A6);
+
+  /// fourthColor
+  static const Color fourthColor = Color(0xFFB2DDD8);
+
+  /// mainTextColor
+  static const Color mainTextColor = Color(0xFF1E1E1E);
+
+  /// secondaryTextColor
+  static const Color secondaryTextColor = Color(0xFF595959);
 }

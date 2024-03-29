@@ -89,6 +89,21 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/SL_clothes.jpg
+  AssetGenImage get sLClothes =>
+      const AssetGenImage('assets/images/SL_clothes.jpg');
+
+  /// File path: assets/images/SL_front.jpg
+  AssetGenImage get sLFront =>
+      const AssetGenImage('assets/images/SL_front.jpg');
+
+  /// File path: assets/images/SL_helm.jpg
+  AssetGenImage get sLHelm => const AssetGenImage('assets/images/SL_helm.jpg');
+
+  /// File path: assets/images/SL_shoes.jpg
+  AssetGenImage get sLShoes =>
+      const AssetGenImage('assets/images/SL_shoes.jpg');
+
   $AssetsImagesBanksGen get banks => const $AssetsImagesBanksGen();
 
   /// File path: assets/images/banner1.png
@@ -116,8 +131,18 @@ class $AssetsImagesGen {
   $AssetsImagesProductsGen get products => const $AssetsImagesProductsGen();
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [banner1, banner2, google, logo, oops, processOrder];
+  List<AssetGenImage> get values => [
+        sLClothes,
+        sLFront,
+        sLHelm,
+        sLShoes,
+        banner1,
+        banner2,
+        google,
+        logo,
+        oops,
+        processOrder
+      ];
 }
 
 class $AssetsImagesBanksGen {
