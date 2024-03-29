@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/components/spaces.dart';
-import '../../models/product_model.dart';
+import '../../../../data/models/responses/product_response_model.dart';
 import '../product_card.dart';
 
 class ProductList extends StatelessWidget {
   final String title;
-  final List<ProductModel> items;
+  final List<Product> items;
 
   const ProductList({
     super.key,

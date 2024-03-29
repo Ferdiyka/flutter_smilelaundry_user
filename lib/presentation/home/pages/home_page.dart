@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/components/spaces.dart';
 import '../../../core/router/app_router.dart';
+import '../bloc/product/product_bloc.dart';
 import '../models/product_model.dart';
 import '../models/store_model.dart';
 import '../widgets/banner_slider.dart';
@@ -99,6 +101,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     searchController = TextEditingController();
+    context.read<ProductBloc>().add(const ProductEvent.getProducts());
     super.initState();
   }
 
@@ -135,10 +138,17 @@ class _HomePageState extends State<HomePage> {
           const SpaceHeight(12.0),
           BannerSlider(items: banners1),
           const SpaceHeight(40.0),
-          ProductList(
-            title: 'Layanan Jasa',
-            items: featuredProducts,
-          ),
+          BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
+            return state.maybeWhen(
+              loaded: (products) {
+                return ProductList(title: 'Layanan Jasa', items: products);
+              },
+              orElse: () => const SizedBox.shrink(),
+              error: (message) => Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          })
         ],
       ),
     );
