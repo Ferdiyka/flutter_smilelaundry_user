@@ -7,11 +7,11 @@ import 'package:go_router/go_router.dart';
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/components/spaces.dart';
 import '../../../core/router/app_router.dart';
+import '../bloc/checkout/checkout_bloc.dart';
 import '../bloc/product/product_bloc.dart';
-import '../models/product_model.dart';
-import '../models/store_model.dart';
 import '../widgets/banner_slider.dart';
 import '../widgets/organism/product_list.dart';
+import 'package:badges/badges.dart' as badges;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,71 +21,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late TextEditingController searchController;
-
-  final List<ProductModel> featuredProducts = [
-    ProductModel(
-      images: [
-        Assets.images.products.lampu.path,
-      ],
-      name: 'Lampu',
-      price: 90000,
-      stock: 20,
-      description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-      store: StoreModel(
-        name: 'Smile Laundry',
-        type: StoreEnum.officialStore,
-        imageUrl: 'https://avatars.githubusercontent.com/u/534678?v=4',
-      ),
-    ),
-    ProductModel(
-      images: [
-        Assets.images.products.earphone.path,
-      ],
-      name: 'Earphone',
-      price: 320000,
-      stock: 20,
-      description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-      store: StoreModel(
-        name: 'Smile Laundry',
-        type: StoreEnum.officialStore,
-        imageUrl: 'https://avatars.githubusercontent.com/u/534678?v=4',
-      ),
-    ),
-    ProductModel(
-      images: [
-        Assets.images.products.earphone.path,
-      ],
-      name: 'Earphone',
-      price: 320000,
-      stock: 20,
-      description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-      store: StoreModel(
-        name: 'Smile Laundry',
-        type: StoreEnum.officialStore,
-        imageUrl: 'https://avatars.githubusercontent.com/u/534678?v=4',
-      ),
-    ),
-    ProductModel(
-      images: [
-        Assets.images.products.earphone.path,
-      ],
-      name: 'Earphone',
-      price: 320000,
-      stock: 20,
-      description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-      store: StoreModel(
-        name: 'Smile Laundry',
-        type: StoreEnum.officialStore,
-        imageUrl: 'https://avatars.githubusercontent.com/u/534678?v=4',
-      ),
-    ),
-  ];
-
   final List<String> banners1 = [
     Assets.images.sLFront.path,
     Assets.images.sLClothes.path,
@@ -100,14 +35,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    searchController = TextEditingController();
     context.read<ProductBloc>().add(const ProductEvent.getProducts());
     super.initState();
   }
 
   @override
   void dispose() {
-    searchController.dispose();
     super.dispose();
   }
 
@@ -117,18 +50,48 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Smile Laundry'),
         actions: [
+          BlocBuilder<CheckoutBloc, CheckoutState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                loaded: (checkout) {
+                  final totalQuantity = checkout.fold<int>(
+                    0,
+                    (previousValue, element) =>
+                        previousValue + element.quantity,
+                  );
+                  return totalQuantity > 0
+                      ? badges.Badge(
+                          badgeContent: Text(
+                            totalQuantity.toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              context.goNamed(
+                                RouteConstants.cart,
+                                pathParameters: PathParameters().toMap(),
+                              );
+                            },
+                            icon: Assets.icons.cart.svg(height: 24.0),
+                          ),
+                        )
+                      : IconButton(
+                          onPressed: () {
+                            context.goNamed(
+                              RouteConstants.cart,
+                              pathParameters: PathParameters().toMap(),
+                            );
+                          },
+                          icon: Assets.icons.cart.svg(height: 24.0),
+                        );
+                },
+                orElse: () => const SizedBox.shrink(),
+              );
+            },
+          ),
           IconButton(
             onPressed: () {},
             icon: Assets.icons.notification.svg(height: 24.0),
-          ),
-          IconButton(
-            onPressed: () {
-              context.goNamed(
-                RouteConstants.cart,
-                pathParameters: PathParameters().toMap(),
-              );
-            },
-            icon: Assets.icons.cart.svg(height: 24.0),
           ),
         ],
       ),

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/constants/colors.dart';
 import 'core/router/app_router.dart';
+import 'presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'presentation/home/bloc/product/product_bloc.dart';
 
 void main() {
@@ -18,8 +19,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final appRouter = AppRouter();
     final router = appRouter.router;
-    return BlocProvider(
-      create: (context) => ProductBloc(ProductRemoteDatasource()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ProductBloc(ProductRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => CheckoutBloc(),
+        ),
+      ],
       child: MaterialApp.router(
         title: 'Flutter Demo',
         theme: ThemeData(
