@@ -20,8 +20,7 @@ class _SplashPageState extends State<SplashPage> {
     Future.delayed(
       const Duration(seconds: 3),
       () => context.goNamed(
-        RouteConstants.root,
-        pathParameters: PathParameters().toMap(),
+        RouteConstants.intro,
       ),
     );
     return Scaffold(

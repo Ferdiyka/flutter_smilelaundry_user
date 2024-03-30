@@ -5,9 +5,9 @@ class RouteConstants {
   static const String splash = 'splash';
   static const String splashPath = '/splash';
 
-  /// route for page [SplashPage]
-  static const String tutor = 'tutor';
-  static const String tutorPath = '/tutor';
+  /// route for page [IntroPage]
+  static const String intro = 'intro';
+  static const String introPath = '/intro';
 
   /// route for page [LoginPage]
   static const String login = 'login';

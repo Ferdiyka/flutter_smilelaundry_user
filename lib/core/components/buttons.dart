@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
 
-
 enum ButtonStyle { filled, outlined }
 
 class Button extends StatelessWidget {
@@ -15,7 +14,7 @@ class Button extends StatelessWidget {
     this.textColor = Colors.white,
     this.width = double.infinity,
     this.height = 50.0,
-    this.borderRadius = 16.0,
+    this.borderRadius = 10.0,
     this.icon,
     this.disabled = false,
     this.fontSize = 16.0,
@@ -30,7 +29,7 @@ class Button extends StatelessWidget {
     this.textColor = AppColors.black,
     this.width = double.infinity,
     this.height = 50.0,
-    this.borderRadius = 16.0,
+    this.borderRadius = 10.0,
     this.icon,
     this.disabled = false,
     this.fontSize = 16.0,
@@ -57,7 +56,7 @@ class Button extends StatelessWidget {
           ? ElevatedButton(
               onPressed: disabled ? null : onPressed,
               style: ElevatedButton.styleFrom(
-                backgroundColor: color,
+                backgroundColor: AppColors.secondaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
@@ -70,7 +69,7 @@ class Button extends StatelessWidget {
                   Text(
                     label,
                     style: TextStyle(
-                      color: textColor,
+                      color: AppColors.mainTextColor,
                       fontSize: fontSize,
                       fontWeight: FontWeight.w600,
                     ),

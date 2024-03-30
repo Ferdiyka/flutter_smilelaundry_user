@@ -40,7 +40,7 @@ class Product {
   final String? note;
   final String? picture;
   // ignore: non_constant_identifier_names
-  final String? picture_url;
+  final String? pictureUrl;
 
   Product({
     this.id,
@@ -52,7 +52,7 @@ class Product {
     this.description,
     this.note,
     this.picture,
-    this.picture_url,
+    this.pictureUrl,
   });
 
   factory Product.fromJson(String str) => Product.fromMap(json.decode(str));
@@ -73,7 +73,7 @@ class Product {
         description: json["description"],
         note: json["note"],
         picture: json["picture"],
-        picture_url: json["picture_url"],
+        pictureUrl: json["picture_url"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -86,6 +86,6 @@ class Product {
         "description": description,
         "note": note,
         "picture": picture,
-        "picture_url": picture_url,
+        "picture_url": pictureUrl,
       };
 }
