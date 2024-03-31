@@ -20,11 +20,6 @@ class _DashboardPageState extends State<DashboardPage> {
   late int _selectedIndex;
   final List<Widget> _pages = [
     const HomePage(),
-    // const SearchPage(),
-    // const CartPage(),
-    // const Center(
-    //   child: Text('This Page 1'),
-    // ),
     const Center(
       child: Text('This Page 2'),
     ),
