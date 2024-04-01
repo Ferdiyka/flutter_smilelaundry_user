@@ -40,6 +40,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           },
         ),
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Assets.icons.notification.svg(height: 24.0),
+          ),
           BlocBuilder<CheckoutBloc, CheckoutState>(
             builder: (context, state) {
               return state.maybeWhen(
@@ -79,10 +83,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               );
             },
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Assets.icons.notification.svg(height: 24.0),
-          ),
+          const SizedBox(width: 16.0),
         ],
       ),
       body: Padding(
@@ -108,7 +109,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
             const SizedBox(height: 8.0),
             Text(
-              data.price!.currencyFormatRp,
+              '${data.price!.currencyFormatRp}' +
+                  (widget.productId == '1' || widget.productId == '2'
+                      ? "/kg"
+                      : "/pcs"),
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

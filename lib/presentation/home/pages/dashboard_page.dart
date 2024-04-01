@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/constants/colors.dart';
+import '../../orders/pages/cart_page.dart';
 import 'home_page.dart';
+import 'logout_page.dart';
 
 class DashboardPage extends StatefulWidget {
   final int currentTab;
@@ -20,15 +22,8 @@ class _DashboardPageState extends State<DashboardPage> {
   late int _selectedIndex;
   final List<Widget> _pages = [
     const HomePage(),
-    const Center(
-      child: Text('This Page 2'),
-    ),
-    const Center(
-      child: Text('This Page 3'),
-    ),
-    const Center(
-      child: Text('This Page 4 '),
-    ),
+    const CartPage(),
+    const LogoutPage(),
   ];
 
   void _onItemTapped(int index) {

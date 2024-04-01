@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-
 import '../../../core/components/spaces.dart';
+import '../../../core/constants/variables.dart';
 import '../../../core/core.dart';
-import '../models/cart_model.dart';
+import '../../home/bloc/checkout/checkout_bloc.dart';
+import '../../home/models/product_quantity.dart';
 
 class CartTile extends StatelessWidget {
-  final CartModel data;
+  final ProductQuantity data;
   const CartTile({super.key, required this.data});
 
   @override
@@ -42,10 +44,13 @@ class CartTile extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                    child: Image.asset(
-                      data.product.images.first,
+                    child: Image.network(
+                      data.product.pictureUrl!.contains('http')
+                          ? data.product.pictureUrl!
+                          : '${Variables.baseUrlImage}${data.product.pictureUrl}',
                       width: 68.0,
                       height: 68.0,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   const SpaceWidth(14.0),
@@ -53,7 +58,7 @@ class CartTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data.product.name,
+                        data.product.name!,
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -62,7 +67,7 @@ class CartTile extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            data.product.priceFormat,
+                            data.product.price!.currencyFormatRp,
                             style: const TextStyle(
                               color: AppColors.primary,
                               fontSize: 16,
@@ -75,60 +80,56 @@ class CartTile extends StatelessWidget {
                   ),
                 ],
               ),
-              StatefulBuilder(
-                builder: (context, setState) => Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ClipRRect(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(5.0)),
-                      child: InkWell(
-                        onTap: () {
-                          if (data.quantity > 1) {
-                            data.quantity--;
-                            setState(() {});
-                          }
-                        },
-                        child: const ColoredBox(
-                          color: AppColors.primary,
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Icon(
-                              Icons.remove,
-                              color: AppColors.white,
-                            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                    child: InkWell(
+                      onTap: () {
+                        context
+                            .read<CheckoutBloc>()
+                            .add(CheckoutEvent.removeItem(data.product));
+                      },
+                      child: const ColoredBox(
+                        color: AppColors.primary,
+                        child: Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: Icon(
+                            Icons.remove,
+                            color: AppColors.white,
                           ),
                         ),
                       ),
                     ),
-                    const SpaceWidth(4.0),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('${data.quantity}'),
-                    ),
-                    const SpaceWidth(4.0),
-                    ClipRRect(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(5.0)),
-                      child: InkWell(
-                        onTap: () {
-                          data.quantity++;
-                          setState(() {});
-                        },
-                        child: const ColoredBox(
-                          color: AppColors.primary,
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Icon(
-                              Icons.add,
-                              color: AppColors.white,
-                            ),
+                  ),
+                  const SpaceWidth(4.0),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('${data.quantity}'),
+                  ),
+                  const SpaceWidth(4.0),
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                    child: InkWell(
+                      onTap: () {
+                        context
+                            .read<CheckoutBloc>()
+                            .add(CheckoutEvent.addItem(data.product));
+                      },
+                      child: const ColoredBox(
+                        color: AppColors.primary,
+                        child: Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: Icon(
+                            Icons.add,
+                            color: AppColors.white,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
