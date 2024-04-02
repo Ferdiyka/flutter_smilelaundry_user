@@ -108,6 +108,9 @@ class _HomePageState extends State<HomePage> {
                 return ProductList(title: 'Layanan Jasa', items: products);
               },
               orElse: () => const SizedBox.shrink(),
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
               error: (message) => Center(
                 child: CircularProgressIndicator(),
               ),

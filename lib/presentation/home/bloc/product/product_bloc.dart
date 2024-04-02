@@ -15,6 +15,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     this._productRemoteDatasource,
   ) : super(const _Initial()) {
     on<_GetProducts>((event, emit) async {
+      emit(const ProductState.loading());
       final response = await _productRemoteDatasource.getProducts();
       response.fold(
         (l) => emit(const ProductState.error('Internal Server Error')),

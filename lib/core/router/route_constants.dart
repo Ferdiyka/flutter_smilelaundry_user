@@ -41,6 +41,10 @@ class RouteConstants {
   static const String addAddress = 'add-address';
   static const String addAddressPath = 'add-address';
 
+  /// route for page [CheckAddressPage]
+  static const String checkAddress = 'check-address';
+  static const String checkAddressPath = 'check-address';
+
   /// route for page [EditAddressPage]
   static const String editAddress = 'edit-address';
   static const String editAddressPath = 'edit-address';

@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/models/responses/product_response_model.dart';
+import '../../presentation/address/models/address_model.dart';
+import '../../presentation/address/pages/add_address_page.dart';
+import '../../presentation/address/pages/address_page.dart';
+import '../../presentation/address/pages/check_address_page.dart';
+import '../../presentation/address/pages/edit_address_page.dart';
 import '../../presentation/auth/pages/login_page.dart';
 import '../../presentation/auth/pages/register_page.dart';
 import '../../presentation/home/pages/dashboard_page.dart';
@@ -97,6 +102,30 @@ class AppRouter {
                   //   ),
                   // ],
                 ),
+              ]),
+          GoRoute(
+              name: RouteConstants.address,
+              path: RouteConstants.addressPath,
+              builder: (context, state) => const AddressPage(),
+              routes: [
+                GoRoute(
+                  name: RouteConstants.addAddress,
+                  path: RouteConstants.addAddressPath,
+                  builder: (context, state) => const AddAddressPage(),
+                ),
+                GoRoute(
+                  name: RouteConstants.checkAddress,
+                  path: RouteConstants.checkAddressPath,
+                  builder: (context, state) => const CheckAddressPage(),
+                ),
+                // GoRoute(
+                //   name: RouteConstants.editAddress,
+                //   path: RouteConstants.editAddressPath,
+                //   builder: (context, state) {
+                //     final args = state.extra as AddressModel;
+                //     return EditAddressPage(data: args);
+                //   },
+                // ),
               ]),
         ],
       ),

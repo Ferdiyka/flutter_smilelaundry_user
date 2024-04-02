@@ -28,11 +28,8 @@ class _LogoutPageState extends State<LogoutPage> {
                 );
               },
               error: (message) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text(message),
-                  ),
+                context.goNamed(
+                  RouteConstants.login,
                 );
               });
         },
