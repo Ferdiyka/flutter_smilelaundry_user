@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'spaces.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -10,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool showLabel;
   final Widget? suffixIcon;
+  final bool readOnly; // Add this line
 
   const CustomTextField({
     super.key,
@@ -20,6 +20,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.showLabel = true,
     this.suffixIcon,
+    this.readOnly = false, // Add this line
   });
 
   @override
@@ -39,9 +40,11 @@ class CustomTextField extends StatelessWidget {
         ],
         TextFormField(
           controller: controller,
-          onChanged: onChanged,
+          onChanged:
+              readOnly ? null : onChanged, // Disable onChanged if readOnly
           obscureText: obscureText,
           keyboardType: keyboardType,
+          readOnly: readOnly, // Add this line
           decoration: InputDecoration(
             suffixIcon: suffixIcon,
             border: const OutlineInputBorder(
