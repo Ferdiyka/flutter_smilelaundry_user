@@ -27,7 +27,7 @@ class RouteConstants {
 
   /// route for page [ProductDetailPage]
   static const String productDetail = 'product_detail';
-  static const String productDetailPath = '/product_detail/:productId';
+  static const String productDetailPath = 'product_detail/:productId';
 
   /// route for page [CartPage]
   static const String cart = 'cart';

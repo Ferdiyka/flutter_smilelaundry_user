@@ -35,19 +35,6 @@ class AppRouter {
         builder: (context, state) => const IntroPage(),
       ),
       GoRoute(
-        name: RouteConstants.productDetail,
-        path: RouteConstants.productDetailPath,
-        builder: (context, state) {
-          final productId = state.pathParameters['productId']!;
-          final data = state.extra
-              as Product; // Get the data object from the extra parameter
-          return ProductDetailPage(
-            productId: productId,
-            data: data,
-          );
-        },
-      ),
-      GoRoute(
         name: RouteConstants.login,
         path: RouteConstants.loginPath,
         builder: (context, state) => const LoginPage(),
@@ -70,6 +57,19 @@ class AppRouter {
           );
         },
         routes: [
+          GoRoute(
+            name: RouteConstants.productDetail,
+            path: RouteConstants.productDetailPath,
+            builder: (context, state) {
+              final productId = state.pathParameters['productId']!;
+              final data = state.extra
+                  as Product; // Get the data object from the extra parameter
+              return ProductDetailPage(
+                productId: productId,
+                data: data,
+              );
+            },
+          ),
           GoRoute(
               name: RouteConstants.cart,
               path: RouteConstants.cartPath,

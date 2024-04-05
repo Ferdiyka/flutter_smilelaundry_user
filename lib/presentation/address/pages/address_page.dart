@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_smilelaundry_user/data/models/responses/user_response_model.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/components/buttons.dart';
@@ -52,15 +53,15 @@ class _AddressPageState extends State<AddressPage> {
                   loaded: (user) {
                     if (user.address != null) {
                       return AddressTile(
-                        data: AddressModel(
+                        data: User(
                           name: user.name!,
                           address: user
                               .address!, // Gunakan operator null-aware (!) untuk menegaskan bahwa nilai tidak null
                           noteAddress: user.noteAddress ??
                               '', // Gunakan operator null coalescing (??) untuk memberikan nilai default jika nilai null
-                          radius: user.radius?.toString() ?? '',
-                          latitudeUser: user.latitudeUser?.toString() ?? '',
-                          longitudeUser: user.longitudeUser?.toString() ?? '',
+                          radius: user.radius,
+                          latitudeUser: user.latitudeUser,
+                          longitudeUser: user.longitudeUser,
                           phone: user.phone ?? '',
                         ),
                         onTap: () {

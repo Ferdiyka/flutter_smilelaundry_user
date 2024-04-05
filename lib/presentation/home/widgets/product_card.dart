@@ -20,6 +20,7 @@ class ProductCard extends StatelessWidget {
           RouteConstants.productDetail,
           pathParameters: {
             'productId': data.id.toString(),
+            'root_tab': 'home',
           },
           extra: data,
         );

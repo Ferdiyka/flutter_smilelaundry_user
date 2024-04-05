@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import '../../../core/components/buttons.dart';
 import '../../../core/components/custom_text_field.dart';
 import '../../../core/components/spaces.dart';
+import '../../../core/constants/colors.dart';
 import '../../../core/router/app_router.dart';
+import '../../../core/assets/assets.gen.dart';
 
 class AddAddressPage extends StatelessWidget {
   final String currentAddress;
@@ -60,18 +62,23 @@ class AddAddressPage extends StatelessWidget {
               children: [
                 const SizedBox(width: 70.0),
                 Expanded(
-                  child: Button.filled(
-                    onPressed: () {
-                      context.goNamed(
-                        RouteConstants.checkAddress,
-                        pathParameters: PathParameters(
-                          rootTab: RootTab.order,
-                        ).toMap(),
-                      );
-                    },
-                    label: 'Check',
+                    child: Button.filled(
+                  onPressed: () {
+                    context.goNamed(
+                      RouteConstants.checkAddress,
+                      pathParameters: PathParameters(
+                        rootTab: RootTab.order,
+                      ).toMap(),
+                    );
+                  },
+                  label: 'Check',
+                  icon: Assets.icons.location.svg(
+                    colorFilter: const ColorFilter.mode(
+                      Colors.black,
+                      BlendMode.srcIn,
+                    ),
                   ),
-                ),
+                )),
                 const SizedBox(width: 70.0),
               ],
             ),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_smilelaundry_user/data/models/responses/user_response_model.dart';
 
 import '../../../core/components/spaces.dart';
 import '../../../core/core.dart';
-import '../models/address_model.dart';
 
 class AddressTile extends StatelessWidget {
-  final AddressModel data;
+  final User data;
   final VoidCallback onTap;
   final VoidCallback onEditTap;
 
@@ -40,10 +41,9 @@ class AddressTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
-                data.name,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
+                data.name!,
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             const SpaceHeight(4.0),
@@ -54,7 +54,23 @@ class AddressTile extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      data.address,
+                      data.address!,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text(
+                      data.noteAddress!,
                       style: const TextStyle(
                         fontSize: 16,
                       ),
@@ -71,7 +87,7 @@ class AddressTile extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      data.phone,
+                      data.phone!,
                       style: const TextStyle(
                         fontSize: 16,
                       ),
@@ -80,8 +96,8 @@ class AddressTile extends StatelessWidget {
                 ],
               ),
             ),
-            const SpaceHeight(24.0),
-            const Divider(color: AppColors.primary),
+            const SpaceHeight(20.0),
+            const Divider(color: AppColors.fourthColor),
             Center(
               child: TextButton(
                 onPressed: onEditTap,
