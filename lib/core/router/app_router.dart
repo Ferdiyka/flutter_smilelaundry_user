@@ -118,7 +118,7 @@ class AppRouter {
                     final currentAddress =
                         extras?['currentAddress'] as String? ?? '';
                     final haversineDistanceText =
-                        extras?['haversineDistanceText'] as String? ?? '';
+                        extras?['haversineDistanceText'] as double? ?? 0.0;
                     final manhattanDistanceText =
                         extras?['manhattanDistanceText'] as String? ?? '';
                     final euclideanDistanceText =

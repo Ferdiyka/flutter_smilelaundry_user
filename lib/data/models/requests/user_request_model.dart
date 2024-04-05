@@ -6,20 +6,29 @@ class UserRequestModel {
   final String? address;
   final String? noteAddress;
   final String? phone;
+  final double? radius;
+  final double? latitudeUser;
+  final double? longitudeUser;
 
   UserRequestModel({
     this.name,
     this.address,
     this.noteAddress,
     this.phone,
+    this.radius,
+    this.latitudeUser,
+    this.longitudeUser,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
       'address': address,
-      'noteAddress': noteAddress,
+      'note_address': noteAddress,
       'phone': phone,
+      'radius': radius,
+      'latitude_user': latitudeUser,
+      'longitude_user': longitudeUser,
     };
   }
 
@@ -30,6 +39,11 @@ class UserRequestModel {
       noteAddress:
           map['noteAddress'] != null ? map['noteAddress'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
+      radius: map['radius'] != null ? map['radius'] as double : null,
+      latitudeUser:
+          map['latitudeUser'] != null ? map['latitudeUser'] as double : null,
+      longitudeUser:
+          map['longitudeUser'] != null ? map['longitudeUser'] as double : null,
     );
   }
 

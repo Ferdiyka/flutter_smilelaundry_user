@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/components/buttons.dart';
 import '../../../core/components/custom_text_field.dart';
 import '../../../core/components/spaces.dart';
-import '../../../core/constants/colors.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/assets/assets.gen.dart';
+import '../../../data/models/requests/user_request_model.dart';
+import '../bloc/add_address/add_address_bloc.dart';
 
 class AddAddressPage extends StatelessWidget {
   final String currentAddress;
-  final String haversineDistanceText;
+  final double haversineDistanceText;
   final String manhattanDistanceText;
   final String euclideanDistanceText;
   final double titikLat;
@@ -145,11 +147,54 @@ class AddAddressPage extends StatelessWidget {
             label: 'Nomor Telepon',
           ),
           const SpaceHeight(24.0),
-          Button.filled(
-            onPressed: () {
-              context.pop();
+          BlocConsumer<AddAddressBloc, AddAddressState>(
+            listener: (context, state) {
+              state.maybeWhen(
+                orElse: () {},
+                loaded: () {
+                  context.goNamed(
+                    RouteConstants.address,
+                    pathParameters: PathParameters(
+                      rootTab: RootTab.order,
+                    ).toMap(),
+                  );
+                },
+              );
             },
-            label: 'Tambah Alamat',
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () {
+                  return Button.filled(
+                    onPressed: () {
+                      context.read<AddAddressBloc>().add(
+                            AddAddressEvent.addAddress(
+                              addressRequestModel: UserRequestModel(
+                                  name: nameController.text,
+                                  address: addressController.text,
+                                  noteAddress: noteAddressController.text,
+                                  phone: phoneController.text,
+                                  radius: haversineDistanceText,
+                                  latitudeUser: titikLat,
+                                  longitudeUser: titikLong),
+                            ),
+                          );
+                      context.goNamed(
+                        RouteConstants.cart,
+                        pathParameters: PathParameters(
+                          rootTab: RootTab.order,
+                        ).toMap(),
+                      );
+                    },
+                    label: 'Tambah Alamat',
+                  );
+                },
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              );
+            },
           ),
         ],
       ),

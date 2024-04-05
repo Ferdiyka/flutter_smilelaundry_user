@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/constants/colors.dart';
 import 'core/router/app_router.dart';
 import 'data/datasources/user_remote_datasource.dart';
+import 'presentation/address/bloc/add_address/add_address_bloc.dart';
 import 'presentation/address/bloc/user/user_bloc.dart';
 import 'presentation/auth/bloc/login/login_bloc.dart';
 import 'presentation/auth/bloc/logout/logout_bloc.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => UserBloc(UserRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => AddAddressBloc(UserRemoteDatasource()),
         ),
       ],
       child: MaterialApp.router(

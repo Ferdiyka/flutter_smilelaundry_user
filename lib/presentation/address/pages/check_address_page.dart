@@ -55,8 +55,7 @@ class _CheckAddressPageState extends State<CheckAddressPage> {
             targetLon,
           );
 
-          String haversineDistanceText =
-              'Haversine Distance: ${haversineDistance.toStringAsFixed(2)} meters';
+          final double haversineDistanceText = haversineDistance;
           String manhattanDistanceText =
               'Manhattan Distance: ${manhattanDistance.toStringAsFixed(2)} meters';
           String euclideanDistanceText =
@@ -153,7 +152,7 @@ class _CheckAddressPageState extends State<CheckAddressPage> {
   void navigateToAddAddressPage(
       BuildContext context,
       String currentAddress,
-      String haversineDistanceText,
+      double haversineDistanceText,
       String manhattanDistanceText,
       String euclideanDistanceText,
       double titikLat,

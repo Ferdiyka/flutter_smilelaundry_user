@@ -34,9 +34,9 @@ class User {
   final String? roles;
   final String? address;
   final String? noteAddress;
-  final int? radius;
-  final int? latitudeUser;
-  final int? longitudeUser;
+  final double? radius;
+  final double? latitudeUser;
+  final double? longitudeUser;
   final dynamic emailVerifiedAt;
   final dynamic twoFactorSecret;
   final dynamic twoFactorRecoveryCodes;

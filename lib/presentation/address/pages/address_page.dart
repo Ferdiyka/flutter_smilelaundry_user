@@ -59,7 +59,7 @@ class _AddressPageState extends State<AddressPage> {
                               .address!, // Gunakan operator null-aware (!) untuk menegaskan bahwa nilai tidak null
                           noteAddress: user.noteAddress ??
                               '', // Gunakan operator null coalescing (??) untuk memberikan nilai default jika nilai null
-                          radius: user.radius,
+                          // radius: user.radius,
                           latitudeUser: user.latitudeUser,
                           longitudeUser: user.longitudeUser,
                           phone: user.phone ?? '',
