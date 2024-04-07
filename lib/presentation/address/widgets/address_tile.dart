@@ -101,7 +101,7 @@ class AddressTile extends StatelessWidget {
             Center(
               child: TextButton(
                 onPressed: onEditTap,
-                child: const Text('Edit'),
+                child: const Text('Edit Address'),
               ),
             ),
           ],

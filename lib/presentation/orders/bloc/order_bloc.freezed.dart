@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'add_address_bloc.dart';
+part of 'order_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,58 +15,58 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$AddAddressEvent {
+mixin _$OrderEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(UserRequestModel addressRequestModel) addAddress,
+    required TResult Function(List<ProductQuantity> products) doOrder,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(UserRequestModel addressRequestModel)? addAddress,
+    TResult? Function(List<ProductQuantity> products)? doOrder,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(UserRequestModel addressRequestModel)? addAddress,
+    TResult Function(List<ProductQuantity> products)? doOrder,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_AddAddress value) addAddress,
+    required TResult Function(_DoOrder value) doOrder,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_AddAddress value)? addAddress,
+    TResult? Function(_DoOrder value)? doOrder,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_AddAddress value)? addAddress,
+    TResult Function(_DoOrder value)? doOrder,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AddAddressEventCopyWith<$Res> {
-  factory $AddAddressEventCopyWith(
-          AddAddressEvent value, $Res Function(AddAddressEvent) then) =
-      _$AddAddressEventCopyWithImpl<$Res, AddAddressEvent>;
+abstract class $OrderEventCopyWith<$Res> {
+  factory $OrderEventCopyWith(
+          OrderEvent value, $Res Function(OrderEvent) then) =
+      _$OrderEventCopyWithImpl<$Res, OrderEvent>;
 }
 
 /// @nodoc
-class _$AddAddressEventCopyWithImpl<$Res, $Val extends AddAddressEvent>
-    implements $AddAddressEventCopyWith<$Res> {
-  _$AddAddressEventCopyWithImpl(this._value, this._then);
+class _$OrderEventCopyWithImpl<$Res, $Val extends OrderEvent>
+    implements $OrderEventCopyWith<$Res> {
+  _$OrderEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,7 +83,7 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$AddAddressEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$OrderEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
@@ -97,7 +97,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'AddAddressEvent.started()';
+    return 'OrderEvent.started()';
   }
 
   @override
@@ -113,7 +113,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(UserRequestModel addressRequestModel) addAddress,
+    required TResult Function(List<ProductQuantity> products) doOrder,
   }) {
     return started();
   }
@@ -122,7 +122,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(UserRequestModel addressRequestModel)? addAddress,
+    TResult? Function(List<ProductQuantity> products)? doOrder,
   }) {
     return started?.call();
   }
@@ -131,7 +131,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(UserRequestModel addressRequestModel)? addAddress,
+    TResult Function(List<ProductQuantity> products)? doOrder,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -144,7 +144,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_AddAddress value) addAddress,
+    required TResult Function(_DoOrder value) doOrder,
   }) {
     return started(this);
   }
@@ -153,7 +153,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_AddAddress value)? addAddress,
+    TResult? Function(_DoOrder value)? doOrder,
   }) {
     return started?.call(this);
   }
@@ -162,7 +162,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_AddAddress value)? addAddress,
+    TResult Function(_DoOrder value)? doOrder,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -172,99 +172,105 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements AddAddressEvent {
+abstract class _Started implements OrderEvent {
   const factory _Started() = _$StartedImpl;
 }
 
 /// @nodoc
-abstract class _$$AddAddressImplCopyWith<$Res> {
-  factory _$$AddAddressImplCopyWith(
-          _$AddAddressImpl value, $Res Function(_$AddAddressImpl) then) =
-      __$$AddAddressImplCopyWithImpl<$Res>;
+abstract class _$$DoOrderImplCopyWith<$Res> {
+  factory _$$DoOrderImplCopyWith(
+          _$DoOrderImpl value, $Res Function(_$DoOrderImpl) then) =
+      __$$DoOrderImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({UserRequestModel addressRequestModel});
+  $Res call({List<ProductQuantity> products});
 }
 
 /// @nodoc
-class __$$AddAddressImplCopyWithImpl<$Res>
-    extends _$AddAddressEventCopyWithImpl<$Res, _$AddAddressImpl>
-    implements _$$AddAddressImplCopyWith<$Res> {
-  __$$AddAddressImplCopyWithImpl(
-      _$AddAddressImpl _value, $Res Function(_$AddAddressImpl) _then)
+class __$$DoOrderImplCopyWithImpl<$Res>
+    extends _$OrderEventCopyWithImpl<$Res, _$DoOrderImpl>
+    implements _$$DoOrderImplCopyWith<$Res> {
+  __$$DoOrderImplCopyWithImpl(
+      _$DoOrderImpl _value, $Res Function(_$DoOrderImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? addressRequestModel = null,
+    Object? products = null,
   }) {
-    return _then(_$AddAddressImpl(
-      addressRequestModel: null == addressRequestModel
-          ? _value.addressRequestModel
-          : addressRequestModel // ignore: cast_nullable_to_non_nullable
-              as UserRequestModel,
+    return _then(_$DoOrderImpl(
+      products: null == products
+          ? _value._products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductQuantity>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$AddAddressImpl implements _AddAddress {
-  const _$AddAddressImpl({required this.addressRequestModel});
+class _$DoOrderImpl implements _DoOrder {
+  const _$DoOrderImpl({required final List<ProductQuantity> products})
+      : _products = products;
 
+  final List<ProductQuantity> _products;
   @override
-  final UserRequestModel addressRequestModel;
+  List<ProductQuantity> get products {
+    if (_products is EqualUnmodifiableListView) return _products;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_products);
+  }
 
   @override
   String toString() {
-    return 'AddAddressEvent.addAddress(addressRequestModel: $addressRequestModel)';
+    return 'OrderEvent.doOrder(products: $products)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AddAddressImpl &&
-            (identical(other.addressRequestModel, addressRequestModel) ||
-                other.addressRequestModel == addressRequestModel));
+            other is _$DoOrderImpl &&
+            const DeepCollectionEquality().equals(other._products, _products));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, addressRequestModel);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_products));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AddAddressImplCopyWith<_$AddAddressImpl> get copyWith =>
-      __$$AddAddressImplCopyWithImpl<_$AddAddressImpl>(this, _$identity);
+  _$$DoOrderImplCopyWith<_$DoOrderImpl> get copyWith =>
+      __$$DoOrderImplCopyWithImpl<_$DoOrderImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(UserRequestModel addressRequestModel) addAddress,
+    required TResult Function(List<ProductQuantity> products) doOrder,
   }) {
-    return addAddress(addressRequestModel);
+    return doOrder(products);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(UserRequestModel addressRequestModel)? addAddress,
+    TResult? Function(List<ProductQuantity> products)? doOrder,
   }) {
-    return addAddress?.call(addressRequestModel);
+    return doOrder?.call(products);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(UserRequestModel addressRequestModel)? addAddress,
+    TResult Function(List<ProductQuantity> products)? doOrder,
     required TResult orElse(),
   }) {
-    if (addAddress != null) {
-      return addAddress(addressRequestModel);
+    if (doOrder != null) {
+      return doOrder(products);
     }
     return orElse();
   }
@@ -273,68 +279,68 @@ class _$AddAddressImpl implements _AddAddress {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_AddAddress value) addAddress,
+    required TResult Function(_DoOrder value) doOrder,
   }) {
-    return addAddress(this);
+    return doOrder(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_AddAddress value)? addAddress,
+    TResult? Function(_DoOrder value)? doOrder,
   }) {
-    return addAddress?.call(this);
+    return doOrder?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_AddAddress value)? addAddress,
+    TResult Function(_DoOrder value)? doOrder,
     required TResult orElse(),
   }) {
-    if (addAddress != null) {
-      return addAddress(this);
+    if (doOrder != null) {
+      return doOrder(this);
     }
     return orElse();
   }
 }
 
-abstract class _AddAddress implements AddAddressEvent {
-  const factory _AddAddress(
-      {required final UserRequestModel addressRequestModel}) = _$AddAddressImpl;
+abstract class _DoOrder implements OrderEvent {
+  const factory _DoOrder({required final List<ProductQuantity> products}) =
+      _$DoOrderImpl;
 
-  UserRequestModel get addressRequestModel;
+  List<ProductQuantity> get products;
   @JsonKey(ignore: true)
-  _$$AddAddressImplCopyWith<_$AddAddressImpl> get copyWith =>
+  _$$DoOrderImplCopyWith<_$DoOrderImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$AddAddressState {
+mixin _$OrderState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function(OrderResponseModel orderResponseModel) loaded,
     required TResult Function(String message) error,
-    required TResult Function() loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function(OrderResponseModel orderResponseModel)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function(OrderResponseModel orderResponseModel)? loaded,
     TResult Function(String message)? error,
-    TResult Function()? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -342,40 +348,40 @@ mixin _$AddAddressState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AddAddressStateCopyWith<$Res> {
-  factory $AddAddressStateCopyWith(
-          AddAddressState value, $Res Function(AddAddressState) then) =
-      _$AddAddressStateCopyWithImpl<$Res, AddAddressState>;
+abstract class $OrderStateCopyWith<$Res> {
+  factory $OrderStateCopyWith(
+          OrderState value, $Res Function(OrderState) then) =
+      _$OrderStateCopyWithImpl<$Res, OrderState>;
 }
 
 /// @nodoc
-class _$AddAddressStateCopyWithImpl<$Res, $Val extends AddAddressState>
-    implements $AddAddressStateCopyWith<$Res> {
-  _$AddAddressStateCopyWithImpl(this._value, this._then);
+class _$OrderStateCopyWithImpl<$Res, $Val extends OrderState>
+    implements $OrderStateCopyWith<$Res> {
+  _$OrderStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -392,7 +398,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$AddAddressStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$OrderStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -406,7 +412,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'AddAddressState.initial()';
+    return 'OrderState.initial()';
   }
 
   @override
@@ -423,8 +429,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function(OrderResponseModel orderResponseModel) loaded,
     required TResult Function(String message) error,
-    required TResult Function() loaded,
   }) {
     return initial();
   }
@@ -434,8 +440,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function(OrderResponseModel orderResponseModel)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? loaded,
   }) {
     return initial?.call();
   }
@@ -445,8 +451,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function(OrderResponseModel orderResponseModel)? loaded,
     TResult Function(String message)? error,
-    TResult Function()? loaded,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -460,8 +466,8 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
   }) {
     return initial(this);
   }
@@ -471,8 +477,8 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -482,8 +488,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -493,7 +499,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements AddAddressState {
+abstract class _Initial implements OrderState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -506,7 +512,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$AddAddressStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$OrderStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -520,7 +526,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'AddAddressState.loading()';
+    return 'OrderState.loading()';
   }
 
   @override
@@ -537,8 +543,8 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function(OrderResponseModel orderResponseModel) loaded,
     required TResult Function(String message) error,
-    required TResult Function() loaded,
   }) {
     return loading();
   }
@@ -548,8 +554,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function(OrderResponseModel orderResponseModel)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? loaded,
   }) {
     return loading?.call();
   }
@@ -559,8 +565,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function(OrderResponseModel orderResponseModel)? loaded,
     TResult Function(String message)? error,
-    TResult Function()? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -574,8 +580,8 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
   }) {
     return loading(this);
   }
@@ -585,8 +591,8 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
   }
@@ -596,8 +602,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -607,8 +613,156 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements AddAddressState {
+abstract class _Loading implements OrderState {
   const factory _Loading() = _$LoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$LoadedImplCopyWith<$Res> {
+  factory _$$LoadedImplCopyWith(
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({OrderResponseModel orderResponseModel});
+}
+
+/// @nodoc
+class __$$LoadedImplCopyWithImpl<$Res>
+    extends _$OrderStateCopyWithImpl<$Res, _$LoadedImpl>
+    implements _$$LoadedImplCopyWith<$Res> {
+  __$$LoadedImplCopyWithImpl(
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? orderResponseModel = freezed,
+  }) {
+    return _then(_$LoadedImpl(
+      freezed == orderResponseModel
+          ? _value.orderResponseModel
+          : orderResponseModel // ignore: cast_nullable_to_non_nullable
+              as OrderResponseModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LoadedImpl implements _Loaded {
+  const _$LoadedImpl(this.orderResponseModel);
+
+  @override
+  final OrderResponseModel orderResponseModel;
+
+  @override
+  String toString() {
+    return 'OrderState.loaded(orderResponseModel: $orderResponseModel)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            const DeepCollectionEquality()
+                .equals(other.orderResponseModel, orderResponseModel));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(orderResponseModel));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(OrderResponseModel orderResponseModel) loaded,
+    required TResult Function(String message) error,
+  }) {
+    return loaded(orderResponseModel);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return loaded?.call(orderResponseModel);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loaded != null) {
+      return loaded(orderResponseModel);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+  }) {
+    return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (loaded != null) {
+      return loaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loaded implements OrderState {
+  const factory _Loaded(final OrderResponseModel orderResponseModel) =
+      _$LoadedImpl;
+
+  OrderResponseModel get orderResponseModel;
+  @JsonKey(ignore: true)
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -622,7 +776,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$AddAddressStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$OrderStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -652,7 +806,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'AddAddressState.error(message: $message)';
+    return 'OrderState.error(message: $message)';
   }
 
   @override
@@ -677,8 +831,8 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function(OrderResponseModel orderResponseModel) loaded,
     required TResult Function(String message) error,
-    required TResult Function() loaded,
   }) {
     return error(message);
   }
@@ -688,8 +842,8 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function(OrderResponseModel orderResponseModel)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? loaded,
   }) {
     return error?.call(message);
   }
@@ -699,8 +853,8 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function(OrderResponseModel orderResponseModel)? loaded,
     TResult Function(String message)? error,
-    TResult Function()? loaded,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -714,8 +868,8 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
   }) {
     return error(this);
   }
@@ -725,8 +879,8 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }
@@ -736,8 +890,8 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -747,125 +901,11 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements AddAddressState {
+abstract class _Error implements OrderState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$AddAddressStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl();
-
-  @override
-  String toString() {
-    return 'AddAddressState.loaded()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadedImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(String message) error,
-    required TResult Function() loaded,
-  }) {
-    return loaded();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(String message)? error,
-    TResult? Function()? loaded,
-  }) {
-    return loaded?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(String message)? error,
-    TResult Function()? loaded,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
-    required TResult Function(_Loaded value) loaded,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_Loaded value)? loaded,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Loaded value)? loaded,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loaded implements AddAddressState {
-  const factory _Loaded() = _$LoadedImpl;
 }
