@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smilelaundry_user/core/extensions/int_ext.dart';
-import 'package:flutter_smilelaundry_user/presentation/address/pages/address_page.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/assets/assets.gen.dart';
