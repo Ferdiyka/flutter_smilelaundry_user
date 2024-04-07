@@ -136,13 +136,20 @@ class CartPage extends StatelessWidget {
               return Button.filled(
                 onPressed: () async {
                   final isAuth = await AuthLocalDatasource().isAuth();
+                  final hasAddress = await AuthLocalDatasource().hasAddress();
                   if (!isAuth) {
                     context.pushNamed(
                       RouteConstants.login,
                     );
+                  } else if (!hasAddress) {
+                    // Jika pengguna tidak memiliki alamat
+                    context.pushNamed(
+                      RouteConstants.addAddress,
+                    );
                   } else {
+                    // Jika pengguna sudah memiliki alamat
                     context.goNamed(
-                      RouteConstants.address,
+                      RouteConstants.orderDetail,
                       pathParameters: PathParameters(
                         rootTab: RootTab.order,
                       ).toMap(),

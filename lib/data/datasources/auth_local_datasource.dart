@@ -35,4 +35,14 @@ class AuthLocalDatasource {
       return false;
     }
   }
+
+  Future<bool> hasAddress() async {
+    // check if the user has an address
+    final authData = await getAuthData();
+    if (authData != null && authData.user?.address != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

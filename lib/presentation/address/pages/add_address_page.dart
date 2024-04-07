@@ -179,7 +179,7 @@ class AddAddressPage extends StatelessWidget {
                             ),
                           );
                       context.goNamed(
-                        RouteConstants.cart,
+                        RouteConstants.orderDetail,
                         pathParameters: PathParameters(
                           rootTab: RootTab.order,
                         ).toMap(),
