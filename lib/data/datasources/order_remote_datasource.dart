@@ -25,4 +25,24 @@ class OrderRemoterDatasource {
       return left('Error');
     }
   }
+
+  //get orders by user id
+  Future<Either<String, OrderResponseModel>> getOrders() async {
+    final authData = await AuthLocalDatasource().getAuthData();
+    final response = await http.get(
+      Uri.parse('${Variables.baseUrl}/api/orders'),
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${authData!.accessToken}'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final orderList = OrderResponseModel.fromJson(response.body);
+      return right(orderList);
+    } else {
+      return left('Error');
+    }
+  }
 }

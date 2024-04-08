@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "70408467232",
+    "project_id": "smilelaundry-app",
+    "storage_bucket": "smilelaundry-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70408467232:android:7670c8704419ed1d5fdd45",
+        "android_client_info": {
+          "package_name": "com.example.flutter_smilelaundry_user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeEonDHJFar0n6Ng-Qn_PXZ6k5PDpNizE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

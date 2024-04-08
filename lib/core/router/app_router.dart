@@ -14,6 +14,7 @@ import '../../presentation/home/pages/product_detail_page.dart';
 import '../../presentation/intro/intro_page.dart';
 import '../../presentation/intro/splash_page.dart';
 import '../../presentation/orders/pages/cart_page.dart';
+import '../../presentation/orders/pages/history_order_page.dart';
 import '../../presentation/orders/pages/order_detail_page.dart';
 
 part 'route_constants.dart';
@@ -69,6 +70,11 @@ class AppRouter {
                 data: data,
               );
             },
+          ),
+          GoRoute(
+            name: RouteConstants.orderList,
+            path: RouteConstants.orderListPath,
+            builder: (context, state) => const HistoryOrderPage(),
           ),
           GoRoute(
               name: RouteConstants.cart,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smilelaundry_user/data/datasources/auth_remote_datasource.dart';
+import 'package:flutter_smilelaundry_user/data/datasources/firebase_messanging_remote_datasource.dart';
 import 'package:flutter_smilelaundry_user/data/datasources/order_remote_datasource.dart';
 import 'package:flutter_smilelaundry_user/data/datasources/product_remote_datasource.dart';
 import 'package:flutter_smilelaundry_user/presentation/orders/bloc/order_bloc.dart';
@@ -16,7 +17,15 @@ import 'presentation/auth/bloc/logout/logout_bloc.dart';
 import 'presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'presentation/home/bloc/product/product_bloc.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseMessagingRemoteDatasource().initialize();
   runApp(const MyApp());
 }
 
