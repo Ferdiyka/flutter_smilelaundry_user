@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'order_bloc.dart';
+part of 'history_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,58 +15,58 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$OrderEvent {
+mixin _$HistoryEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(List<ProductQuantity> products) doOrder,
+    required TResult Function() getHistoryOrder,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(List<ProductQuantity> products)? doOrder,
+    TResult? Function()? getHistoryOrder,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(List<ProductQuantity> products)? doOrder,
+    TResult Function()? getHistoryOrder,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_DoOrder value) doOrder,
+    required TResult Function(_HistoryOrder value) getHistoryOrder,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_DoOrder value)? doOrder,
+    TResult? Function(_HistoryOrder value)? getHistoryOrder,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_DoOrder value)? doOrder,
+    TResult Function(_HistoryOrder value)? getHistoryOrder,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $OrderEventCopyWith<$Res> {
-  factory $OrderEventCopyWith(
-          OrderEvent value, $Res Function(OrderEvent) then) =
-      _$OrderEventCopyWithImpl<$Res, OrderEvent>;
+abstract class $HistoryEventCopyWith<$Res> {
+  factory $HistoryEventCopyWith(
+          HistoryEvent value, $Res Function(HistoryEvent) then) =
+      _$HistoryEventCopyWithImpl<$Res, HistoryEvent>;
 }
 
 /// @nodoc
-class _$OrderEventCopyWithImpl<$Res, $Val extends OrderEvent>
-    implements $OrderEventCopyWith<$Res> {
-  _$OrderEventCopyWithImpl(this._value, this._then);
+class _$HistoryEventCopyWithImpl<$Res, $Val extends HistoryEvent>
+    implements $HistoryEventCopyWith<$Res> {
+  _$HistoryEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,7 +83,7 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$OrderEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$HistoryEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
@@ -97,7 +97,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'OrderEvent.started()';
+    return 'HistoryEvent.started()';
   }
 
   @override
@@ -113,7 +113,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(List<ProductQuantity> products) doOrder,
+    required TResult Function() getHistoryOrder,
   }) {
     return started();
   }
@@ -122,7 +122,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(List<ProductQuantity> products)? doOrder,
+    TResult? Function()? getHistoryOrder,
   }) {
     return started?.call();
   }
@@ -131,7 +131,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(List<ProductQuantity> products)? doOrder,
+    TResult Function()? getHistoryOrder,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -144,7 +144,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_DoOrder value) doOrder,
+    required TResult Function(_HistoryOrder value) getHistoryOrder,
   }) {
     return started(this);
   }
@@ -153,7 +153,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_DoOrder value)? doOrder,
+    TResult? Function(_HistoryOrder value)? getHistoryOrder,
   }) {
     return started?.call(this);
   }
@@ -162,7 +162,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_DoOrder value)? doOrder,
+    TResult Function(_HistoryOrder value)? getHistoryOrder,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -172,105 +172,72 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements OrderEvent {
+abstract class _Started implements HistoryEvent {
   const factory _Started() = _$StartedImpl;
 }
 
 /// @nodoc
-abstract class _$$DoOrderImplCopyWith<$Res> {
-  factory _$$DoOrderImplCopyWith(
-          _$DoOrderImpl value, $Res Function(_$DoOrderImpl) then) =
-      __$$DoOrderImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<ProductQuantity> products});
+abstract class _$$HistoryOrderImplCopyWith<$Res> {
+  factory _$$HistoryOrderImplCopyWith(
+          _$HistoryOrderImpl value, $Res Function(_$HistoryOrderImpl) then) =
+      __$$HistoryOrderImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$DoOrderImplCopyWithImpl<$Res>
-    extends _$OrderEventCopyWithImpl<$Res, _$DoOrderImpl>
-    implements _$$DoOrderImplCopyWith<$Res> {
-  __$$DoOrderImplCopyWithImpl(
-      _$DoOrderImpl _value, $Res Function(_$DoOrderImpl) _then)
+class __$$HistoryOrderImplCopyWithImpl<$Res>
+    extends _$HistoryEventCopyWithImpl<$Res, _$HistoryOrderImpl>
+    implements _$$HistoryOrderImplCopyWith<$Res> {
+  __$$HistoryOrderImplCopyWithImpl(
+      _$HistoryOrderImpl _value, $Res Function(_$HistoryOrderImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? products = null,
-  }) {
-    return _then(_$DoOrderImpl(
-      products: null == products
-          ? _value._products
-          : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductQuantity>,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$DoOrderImpl implements _DoOrder {
-  const _$DoOrderImpl({required final List<ProductQuantity> products})
-      : _products = products;
-
-  final List<ProductQuantity> _products;
-  @override
-  List<ProductQuantity> get products {
-    if (_products is EqualUnmodifiableListView) return _products;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_products);
-  }
+class _$HistoryOrderImpl implements _HistoryOrder {
+  const _$HistoryOrderImpl();
 
   @override
   String toString() {
-    return 'OrderEvent.doOrder(products: $products)';
+    return 'HistoryEvent.getHistoryOrder()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DoOrderImpl &&
-            const DeepCollectionEquality().equals(other._products, _products));
+        (other.runtimeType == runtimeType && other is _$HistoryOrderImpl);
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_products));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DoOrderImplCopyWith<_$DoOrderImpl> get copyWith =>
-      __$$DoOrderImplCopyWithImpl<_$DoOrderImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(List<ProductQuantity> products) doOrder,
+    required TResult Function() getHistoryOrder,
   }) {
-    return doOrder(products);
+    return getHistoryOrder();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(List<ProductQuantity> products)? doOrder,
+    TResult? Function()? getHistoryOrder,
   }) {
-    return doOrder?.call(products);
+    return getHistoryOrder?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(List<ProductQuantity> products)? doOrder,
+    TResult Function()? getHistoryOrder,
     required TResult orElse(),
   }) {
-    if (doOrder != null) {
-      return doOrder(products);
+    if (getHistoryOrder != null) {
+      return getHistoryOrder();
     }
     return orElse();
   }
@@ -279,51 +246,45 @@ class _$DoOrderImpl implements _DoOrder {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_DoOrder value) doOrder,
+    required TResult Function(_HistoryOrder value) getHistoryOrder,
   }) {
-    return doOrder(this);
+    return getHistoryOrder(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_DoOrder value)? doOrder,
+    TResult? Function(_HistoryOrder value)? getHistoryOrder,
   }) {
-    return doOrder?.call(this);
+    return getHistoryOrder?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_DoOrder value)? doOrder,
+    TResult Function(_HistoryOrder value)? getHistoryOrder,
     required TResult orElse(),
   }) {
-    if (doOrder != null) {
-      return doOrder(this);
+    if (getHistoryOrder != null) {
+      return getHistoryOrder(this);
     }
     return orElse();
   }
 }
 
-abstract class _DoOrder implements OrderEvent {
-  const factory _DoOrder({required final List<ProductQuantity> products}) =
-      _$DoOrderImpl;
-
-  List<ProductQuantity> get products;
-  @JsonKey(ignore: true)
-  _$$DoOrderImplCopyWith<_$DoOrderImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _HistoryOrder implements HistoryEvent {
+  const factory _HistoryOrder() = _$HistoryOrderImpl;
 }
 
 /// @nodoc
-mixin _$OrderState {
+mixin _$HistoryState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(OrderResponseModel orderResponseModel) loaded,
+    required TResult Function(HistoryOrderResponseModel orders) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -331,7 +292,7 @@ mixin _$OrderState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult? Function(HistoryOrderResponseModel orders)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -339,7 +300,7 @@ mixin _$OrderState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult Function(HistoryOrderResponseModel orders)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -372,16 +333,16 @@ mixin _$OrderState {
 }
 
 /// @nodoc
-abstract class $OrderStateCopyWith<$Res> {
-  factory $OrderStateCopyWith(
-          OrderState value, $Res Function(OrderState) then) =
-      _$OrderStateCopyWithImpl<$Res, OrderState>;
+abstract class $HistoryStateCopyWith<$Res> {
+  factory $HistoryStateCopyWith(
+          HistoryState value, $Res Function(HistoryState) then) =
+      _$HistoryStateCopyWithImpl<$Res, HistoryState>;
 }
 
 /// @nodoc
-class _$OrderStateCopyWithImpl<$Res, $Val extends OrderState>
-    implements $OrderStateCopyWith<$Res> {
-  _$OrderStateCopyWithImpl(this._value, this._then);
+class _$HistoryStateCopyWithImpl<$Res, $Val extends HistoryState>
+    implements $HistoryStateCopyWith<$Res> {
+  _$HistoryStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -398,7 +359,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$OrderStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$HistoryStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -412,7 +373,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'OrderState.initial()';
+    return 'HistoryState.initial()';
   }
 
   @override
@@ -429,7 +390,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(OrderResponseModel orderResponseModel) loaded,
+    required TResult Function(HistoryOrderResponseModel orders) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -440,7 +401,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult? Function(HistoryOrderResponseModel orders)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -451,7 +412,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult Function(HistoryOrderResponseModel orders)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -499,7 +460,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements OrderState {
+abstract class _Initial implements HistoryState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -512,7 +473,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$OrderStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$HistoryStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -526,7 +487,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'OrderState.loading()';
+    return 'HistoryState.loading()';
   }
 
   @override
@@ -543,7 +504,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(OrderResponseModel orderResponseModel) loaded,
+    required TResult Function(HistoryOrderResponseModel orders) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -554,7 +515,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult? Function(HistoryOrderResponseModel orders)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -565,7 +526,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult Function(HistoryOrderResponseModel orders)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -613,7 +574,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements OrderState {
+abstract class _Loading implements HistoryState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -623,12 +584,12 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({OrderResponseModel orderResponseModel});
+  $Res call({HistoryOrderResponseModel orders});
 }
 
 /// @nodoc
 class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$OrderStateCopyWithImpl<$Res, _$LoadedImpl>
+    extends _$HistoryStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
@@ -637,13 +598,13 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? orderResponseModel = null,
+    Object? orders = freezed,
   }) {
     return _then(_$LoadedImpl(
-      null == orderResponseModel
-          ? _value.orderResponseModel
-          : orderResponseModel // ignore: cast_nullable_to_non_nullable
-              as OrderResponseModel,
+      freezed == orders
+          ? _value.orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as HistoryOrderResponseModel,
     ));
   }
 }
@@ -651,14 +612,14 @@ class __$$LoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl(this.orderResponseModel);
+  const _$LoadedImpl(this.orders);
 
   @override
-  final OrderResponseModel orderResponseModel;
+  final HistoryOrderResponseModel orders;
 
   @override
   String toString() {
-    return 'OrderState.loaded(orderResponseModel: $orderResponseModel)';
+    return 'HistoryState.loaded(orders: $orders)';
   }
 
   @override
@@ -666,12 +627,12 @@ class _$LoadedImpl implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
-            (identical(other.orderResponseModel, orderResponseModel) ||
-                other.orderResponseModel == orderResponseModel));
+            const DeepCollectionEquality().equals(other.orders, orders));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, orderResponseModel);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(orders));
 
   @JsonKey(ignore: true)
   @override
@@ -684,10 +645,10 @@ class _$LoadedImpl implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(OrderResponseModel orderResponseModel) loaded,
+    required TResult Function(HistoryOrderResponseModel orders) loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(orderResponseModel);
+    return loaded(orders);
   }
 
   @override
@@ -695,10 +656,10 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult? Function(HistoryOrderResponseModel orders)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(orderResponseModel);
+    return loaded?.call(orders);
   }
 
   @override
@@ -706,12 +667,12 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult Function(HistoryOrderResponseModel orders)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(orderResponseModel);
+      return loaded(orders);
     }
     return orElse();
   }
@@ -754,11 +715,10 @@ class _$LoadedImpl implements _Loaded {
   }
 }
 
-abstract class _Loaded implements OrderState {
-  const factory _Loaded(final OrderResponseModel orderResponseModel) =
-      _$LoadedImpl;
+abstract class _Loaded implements HistoryState {
+  const factory _Loaded(final HistoryOrderResponseModel orders) = _$LoadedImpl;
 
-  OrderResponseModel get orderResponseModel;
+  HistoryOrderResponseModel get orders;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -775,7 +735,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$OrderStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$HistoryStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -805,7 +765,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'OrderState.error(message: $message)';
+    return 'HistoryState.error(message: $message)';
   }
 
   @override
@@ -830,7 +790,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(OrderResponseModel orderResponseModel) loaded,
+    required TResult Function(HistoryOrderResponseModel orders) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -841,7 +801,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult? Function(HistoryOrderResponseModel orders)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -852,7 +812,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(OrderResponseModel orderResponseModel)? loaded,
+    TResult Function(HistoryOrderResponseModel orders)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -900,7 +860,7 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements OrderState {
+abstract class _Error implements HistoryState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;

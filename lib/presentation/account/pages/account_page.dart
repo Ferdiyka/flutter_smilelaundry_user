@@ -2,12 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/core.dart';
 import '../../../core/router/app_router.dart';
 import '../../auth/bloc/logout/logout_bloc.dart';
+import '../../../../data/datasources/auth_local_datasource.dart';
 
-class AccountPage extends StatelessWidget {
-  const AccountPage({super.key});
+class AccountPage extends StatefulWidget {
+  const AccountPage({Key? key}) : super(key: key);
+
+  @override
+  _AccountPageState createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
+  bool _isLoggedIn = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _checkAuthStatus();
+  }
+
+  Future<void> _checkAuthStatus() async {
+    final authLocalDataSource = AuthLocalDatasource();
+    final isAuthenticated = await authLocalDataSource.isAuth();
+    setState(() {
+      _isLoggedIn = isAuthenticated;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,100 +36,48 @@ class AccountPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Account'),
       ),
-      body: ListView(
-        children: [
-          ListTile(
-            leading: Assets.icons.user.svg(),
-            title: const Text(
-              'Profil',
-              style: TextStyle(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Assets.icons.bag.svg(),
-            title: const Text(
-              'Pesanan',
-              style: TextStyle(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            onTap: () {
-              context.pushNamed(
-                RouteConstants.orderList,
-                pathParameters: PathParameters(
-                  rootTab: RootTab.account,
-                ).toMap(),
-              );
-            },
-          ),
-          ListTile(
-            leading: Assets.icons.location.svg(),
-            title: const Text(
-              'Alamat',
-              style: TextStyle(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Assets.icons.creditcard.svg(),
-            title: const Text(
-              'Pembayaran',
-              style: TextStyle(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            onTap: () {},
-          ),
-          BlocConsumer<LogoutBloc, LogoutState>(
-            listener: (context, state) {
-              state.maybeWhen(
-                  orElse: () {},
-                  loaded: () {
-                    context.goNamed(
-                      RouteConstants.root,
-                      pathParameters: PathParameters().toMap(),
-                    );
-                  },
-                  error: (message) {
-                    context.goNamed(
-                      RouteConstants.login,
-                    );
-                  });
-            },
-            builder: (context, state) {
-              return state.maybeWhen(orElse: () {
-                return ListTile(
-                  leading: const Icon(
-                    Icons.login_outlined,
-                    color: AppColors.primary,
-                  ),
-                  title: const Text(
-                    'Logout',
-                    style: TextStyle(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  onTap: () {
-                    context.read<LogoutBloc>().add(const LogoutEvent.logout());
-                  },
-                );
-              }, loading: () {
-                return const CircularProgressIndicator();
-              });
-            },
-          )
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: _isLoggedIn
+              ? _buildLoggedInContent(context)
+              : _buildLoggedOutContent(context),
+        ),
       ),
     );
+  }
+
+  List<Widget> _buildLoggedInContent(BuildContext context) {
+    return [
+      Text(
+        '',
+      ),
+      ElevatedButton(
+        onPressed: () {
+          context.read<LogoutBloc>().add(const LogoutEvent.logout());
+          setState(() {
+            _isLoggedIn = false;
+          });
+          context.goNamed(
+            RouteConstants.login,
+          );
+        },
+        child: const Text('Logout'),
+      ),
+    ];
+  }
+
+  List<Widget> _buildLoggedOutContent(BuildContext context) {
+    return [
+      ElevatedButton(
+        onPressed: () {
+          context.goNamed(
+            RouteConstants.login,
+          );
+        },
+        child: const Text('Login'),
+      ),
+    ];
   }
 }

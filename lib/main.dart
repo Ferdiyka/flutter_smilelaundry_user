@@ -3,6 +3,7 @@ import 'package:flutter_smilelaundry_user/data/datasources/auth_remote_datasourc
 import 'package:flutter_smilelaundry_user/data/datasources/firebase_messanging_remote_datasource.dart';
 import 'package:flutter_smilelaundry_user/data/datasources/order_remote_datasource.dart';
 import 'package:flutter_smilelaundry_user/data/datasources/product_remote_datasource.dart';
+import 'package:flutter_smilelaundry_user/presentation/orders/bloc/history/history_bloc.dart';
 import 'package:flutter_smilelaundry_user/presentation/orders/bloc/order_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,6 +59,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => OrderBloc(OrderRemoterDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => HistoryBloc(OrderRemoterDatasource()),
         ),
       ],
       child: MaterialApp.router(

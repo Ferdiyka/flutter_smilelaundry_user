@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smilelaundry_user/core/extensions/int_ext.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/components/buttons.dart';
@@ -101,7 +102,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     child: Button.outlined(
                       onPressed: () {
                         context.pushNamed(
-                          RouteConstants.trackingOrder,
+                          RouteConstants.orderList,
                           pathParameters: PathParameters().toMap(),
                         );
                       },
@@ -164,9 +165,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                             .address!, // Gunakan operator null-aware (!) untuk menegaskan bahwa nilai tidak null
                         noteAddress: user.noteAddress ??
                             '', // Gunakan operator null coalescing (??) untuk memberikan nilai default jika nilai null
-                        // radius: user.radius,
-                        latitudeUser: user.latitudeUser,
-                        longitudeUser: user.longitudeUser,
                         phone: user.phone ?? '',
                       ),
                       onTap: () {
@@ -291,36 +289,23 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       orElse: () {
                         return Button.filled(
                           onPressed: () {
-                            showDialog(
+                            QuickAlert.show(
                               context: context,
-                              builder: (BuildContext context) {
-                                return CupertinoAlertDialog(
-                                  title: const Text("Konfirmasi Checkout"),
-                                  content: const Text(
-                                      "Anda yakin semua pesanan sudah benar?"),
-                                  actions: <Widget>[
-                                    CupertinoDialogAction(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pop(); // Tutup dialog
-                                      },
-                                      child: const Text("Batal"),
-                                    ),
-                                    CupertinoDialogAction(
-                                      onPressed: () {
-                                        context
-                                            .read<CheckoutBloc>()
-                                            .add(const CheckoutEvent.started());
-                                        context.read<OrderBloc>().add(
-                                            OrderEvent.doOrder(
-                                                products: products
-                                                    as List<ProductQuantity>));
-                                        onCheckout();
-                                      },
-                                      child: const Text("Ya"),
-                                    ),
-                                  ],
-                                );
+                              type: QuickAlertType.confirm,
+                              text: 'Apa Anda yakin pesanan sudah sesuai?',
+                              confirmBtnText: 'Yes',
+                              cancelBtnText: 'No',
+                              textColor: AppColors.mainTextColor,
+                              confirmBtnColor: AppColors.secondaryColor,
+                              onConfirmBtnTap: () {
+                                context
+                                    .read<CheckoutBloc>()
+                                    .add(const CheckoutEvent.started());
+                                context.read<OrderBloc>().add(
+                                    OrderEvent.doOrder(
+                                        products:
+                                            products as List<ProductQuantity>));
+                                onCheckout();
                               },
                             );
                           },

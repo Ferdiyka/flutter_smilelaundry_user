@@ -45,4 +45,14 @@ class AuthLocalDatasource {
       return false;
     }
   }
+
+  Future<String?> getUserName() async {
+    // get the user's name
+    final authData = await getAuthData();
+    if (authData != null && authData.user?.name != null) {
+      return authData.user?.name;
+    } else {
+      return null;
+    }
+  }
 }

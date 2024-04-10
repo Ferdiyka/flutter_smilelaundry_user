@@ -55,7 +55,8 @@ class CustomTextField extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
               borderSide: BorderSide(color: Colors.grey),
             ),
-            hintText: label,
+            // Mengatur TextField menjadi tidak bisa diklik (disabled) jika readOnly bernilai true
+            enabled: !readOnly,
           ),
         ),
       ],

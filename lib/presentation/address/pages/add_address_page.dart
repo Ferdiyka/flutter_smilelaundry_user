@@ -9,6 +9,7 @@ import '../../../core/router/app_router.dart';
 import '../../../core/assets/assets.gen.dart';
 import '../../../data/models/requests/user_request_model.dart';
 import '../bloc/add_address/add_address_bloc.dart';
+import '../bloc/user/user_bloc.dart';
 
 class AddAddressPage extends StatelessWidget {
   final String currentAddress;
@@ -17,14 +18,15 @@ class AddAddressPage extends StatelessWidget {
   final String euclideanDistanceText;
   final double titikLat;
   final double titikLong;
-  const AddAddressPage(
-      {super.key,
-      required this.currentAddress,
-      required this.haversineDistanceText,
-      required this.manhattanDistanceText,
-      required this.euclideanDistanceText,
-      required this.titikLat,
-      required this.titikLong});
+  const AddAddressPage({
+    Key? key,
+    required this.currentAddress,
+    required this.haversineDistanceText,
+    required this.manhattanDistanceText,
+    required this.euclideanDistanceText,
+    required this.titikLat,
+    required this.titikLong,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +40,12 @@ class AddAddressPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Adress'),
+        title: const Text('Add Address'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: [
-          const Text(
-            'Note: Kami hanya bisa melayani antar-jemput pakaian bagi pelanggan yang berada dalam radius 500 meter dari Smile Laundry',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-            textAlign: TextAlign.justify,
-          ),
-          const SpaceHeight(24.0),
+          // Widget lainnya
           const Text(
             'GPS',
             style: TextStyle(
@@ -64,68 +59,30 @@ class AddAddressPage extends StatelessWidget {
               children: [
                 const SizedBox(width: 70.0),
                 Expanded(
-                    child: Button.filled(
-                  onPressed: () {
-                    context.goNamed(
-                      RouteConstants.checkAddress,
-                      pathParameters: PathParameters(
-                        rootTab: RootTab.order,
-                      ).toMap(),
-                    );
-                  },
-                  label: 'Check',
-                  icon: Assets.icons.location.svg(
-                    colorFilter: const ColorFilter.mode(
-                      Colors.black,
-                      BlendMode.srcIn,
+                  child: Button.filled(
+                    onPressed: () {
+                      context.goNamed(
+                        RouteConstants.checkAddress,
+                        pathParameters: PathParameters(
+                          rootTab: RootTab.order,
+                        ).toMap(),
+                      );
+                    },
+                    label: 'Check',
+                    icon: Assets.icons.location.svg(
+                      colorFilter: const ColorFilter.mode(
+                        Colors.black,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
-                )),
+                ),
                 const SizedBox(width: 70.0),
               ],
             ),
           ),
           const SpaceHeight(24.0),
-          const Text(
-            'Jarak radius lokasi rumahmu dari Smile Laundry: ',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          Text(
-            '$haversineDistanceText',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            '$manhattanDistanceText',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            '$euclideanDistanceText',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            '$titikLat',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          Text(
-            '$titikLong',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          const SpaceHeight(24.0),
+          // Widget lainnya
           CustomTextField(
             controller: addressController,
             label: 'Alamat',
@@ -147,48 +104,67 @@ class AddAddressPage extends StatelessWidget {
             label: 'Nomor Telepon',
           ),
           const SpaceHeight(24.0),
-          BlocConsumer<AddAddressBloc, AddAddressState>(
-            listener: (context, state) {
-              state.maybeWhen(
-                orElse: () {},
-                loaded: () {
-                  context.goNamed(
-                    RouteConstants.address,
-                    pathParameters: PathParameters(
-                      rootTab: RootTab.order,
-                    ).toMap(),
-                  );
-                },
-              );
-            },
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () {
-                  return Button.filled(
-                    onPressed: () {
-                      context.read<AddAddressBloc>().add(
-                            AddAddressEvent.addAddress(
-                              addressRequestModel: UserRequestModel(
-                                  name: nameController.text,
-                                  address: addressController.text,
-                                  noteAddress: noteAddressController.text,
-                                  phone: phoneController.text,
-                                  radius: haversineDistanceText,
-                                  latitudeUser: titikLat,
-                                  longitudeUser: titikLong),
-                            ),
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, userState) {
+              return userState.maybeWhen(
+                loaded: (user) {
+                  addressController.text = user.address ?? '';
+                  noteAddressController.text = user.noteAddress ?? '';
+                  nameController.text = user.name ?? '';
+                  phoneController.text = user.phone ?? '';
+
+                  return BlocConsumer<AddAddressBloc, AddAddressState>(
+                    listener: (context, state) {
+                      state.maybeWhen(
+                        orElse: () {},
+                        loaded: () {
+                          context.goNamed(
+                            RouteConstants.address,
+                            pathParameters: PathParameters(
+                              rootTab: RootTab.order,
+                            ).toMap(),
                           );
-                      context.goNamed(
-                        RouteConstants.orderDetail,
-                        pathParameters: PathParameters(
-                          rootTab: RootTab.order,
-                        ).toMap(),
+                        },
                       );
                     },
-                    label: 'Tambah Alamat',
+                    builder: (context, state) {
+                      return state.maybeWhen(
+                        orElse: () {
+                          return Button.filled(
+                            onPressed: () {
+                              context.read<AddAddressBloc>().add(
+                                    AddAddressEvent.addAddress(
+                                      addressRequestModel: UserRequestModel(
+                                          name: nameController.text,
+                                          address: addressController.text,
+                                          noteAddress:
+                                              noteAddressController.text,
+                                          phone: phoneController.text,
+                                          radius: haversineDistanceText,
+                                          latitudeUser: titikLat,
+                                          longitudeUser: titikLong),
+                                    ),
+                                  );
+                              context.goNamed(
+                                RouteConstants.orderDetail,
+                                pathParameters: PathParameters(
+                                  rootTab: RootTab.order,
+                                ).toMap(),
+                              );
+                            },
+                            label: 'Tambah Alamat',
+                          );
+                        },
+                        loading: () {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      );
+                    },
                   );
                 },
-                loading: () {
+                orElse: () {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );

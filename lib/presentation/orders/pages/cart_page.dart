@@ -143,8 +143,11 @@ class CartPage extends StatelessWidget {
                     );
                   } else if (!hasAddress) {
                     // Jika pengguna tidak memiliki alamat
-                    context.pushNamed(
+                    context.goNamed(
                       RouteConstants.addAddress,
+                      pathParameters: PathParameters(
+                        rootTab: RootTab.order,
+                      ).toMap(),
                     );
                   } else {
                     // Jika pengguna sudah memiliki alamat

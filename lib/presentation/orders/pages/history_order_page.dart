@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../core/components/spaces.dart';
-import '../bloc/history_order/history_order_bloc.dart';
-import '../models/transaction_model.dart';
+import '../../../data/datasources/auth_local_datasource.dart';
+import '../bloc/history/history_bloc.dart';
 import '../widgets/order_card.dart';
 
 class HistoryOrderPage extends StatefulWidget {
-  const HistoryOrderPage({super.key});
+  const HistoryOrderPage({Key? key}) : super(key: key);
 
   @override
   State<HistoryOrderPage> createState() => _HistoryOrderPageState();
 }
 
 class _HistoryOrderPageState extends State<HistoryOrderPage> {
+  final _authLocalDatasource = AuthLocalDatasource();
+
   @override
   void initState() {
-    context
-        .read<HistoryOrderBloc>()
-        .add(const HistoryOrderEvent.getHistoryOrder());
     super.initState();
+    _checkAuthStatus();
+  }
+
+  Future<void> _checkAuthStatus() async {
+    final isAuth = await _authLocalDatasource.isAuth();
+    if (isAuth) {
+      context.read<HistoryBloc>().add(const HistoryEvent.getHistoryOrder());
+    } else {
+      // Display "No Data"
+    }
   }
 
   @override
@@ -27,8 +35,14 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pesanan'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _checkAuthStatus,
+          ),
+        ],
       ),
-      body: BlocBuilder<HistoryOrderBloc, HistoryOrderState>(
+      body: BlocBuilder<HistoryBloc, HistoryState>(
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () {
@@ -36,8 +50,11 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
                 child: Text('No Data'),
               );
             },
-            loaded: (transactions) {
-              if (transactions.orders!.isEmpty) {
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            loaded: (historyOrderResponseModel) {
+              if (historyOrderResponseModel.orders!.isEmpty) {
                 return const Center(
                   child: Text('No Data'),
                 );
@@ -45,24 +62,17 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
               return ListView.separated(
                 padding: const EdgeInsets.all(16.0),
                 separatorBuilder: (context, index) => const SpaceHeight(16.0),
-                itemCount: transactions.orders!.length,
-                itemBuilder: (context, index) => OrderCard(
-                  data: transactions.orders![index],
-                ),
+                itemCount: historyOrderResponseModel.orders!.length,
+                itemBuilder: (context, index) {
+                  final orderElement = historyOrderResponseModel.orders![index];
+                  return OrderCard(
+                    data: orderElement.order!,
+                    products: orderElement.products!,
+                  );
+                },
               );
             },
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
           );
-          // return ListView.separated(
-          //   padding: const EdgeInsets.all(16.0),
-          //   separatorBuilder: (context, index) => const SpaceHeight(16.0),
-          //   itemCount: transactions.length,
-          //   itemBuilder: (context, index) => OrderCard(
-          //     data: transactions[index],
-          //   ),
-          // );
         },
       ),
     );
