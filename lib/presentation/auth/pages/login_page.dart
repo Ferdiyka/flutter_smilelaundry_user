@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smilelaundry_user/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_smilelaundry_user/presentation/auth/bloc/login/login_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../core/components/buttons.dart';
 import '../../../core/components/spaces.dart';
@@ -37,8 +40,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
+        padding: const EdgeInsets.all(20.0),
         children: [
+          const SpaceHeight(100.0),
           const Text(
             'Login Account',
             style: TextStyle(
@@ -46,15 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const Text(
-            'Hello, welcome back to our account',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
           const SpaceHeight(50.0),
-
-          const SpaceHeight(60.0),
           TextFormField(
             controller: emailController,
             keyboardType: TextInputType.emailAddress,
@@ -92,11 +88,10 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
                 error: (message) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor: AppColors.red,
-                      content: Text(message),
-                    ),
+                  QuickAlert.show(
+                    context: context,
+                    type: QuickAlertType.error,
+                    text: message,
                   );
                 },
               );
@@ -106,12 +101,22 @@ class _LoginPageState extends State<LoginPage> {
                 orElse: () {
                   return Button.filled(
                     onPressed: () {
-                      context.read<LoginBloc>().add(
-                            LoginEvent.login(
-                              email: emailController.text,
-                              password: passwordController.text,
-                            ),
-                          );
+                      // Validasi email dan password
+                      if (emailController.text.isEmpty ||
+                          passwordController.text.isEmpty) {
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.error,
+                          text: 'Email dan Password harus diisi',
+                        );
+                      } else {
+                        context.read<LoginBloc>().add(
+                              LoginEvent.login(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              ),
+                            );
+                      }
                     },
                     label: 'Login',
                   );
@@ -122,60 +127,20 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
               );
-              // return Button.filled(
-              //   onPressed: () {
-              //     // context.goNamed(
-              //     //   RouteConstants.root,
-              //     //   pathParameters: PathParameters().toMap(),
-              //     // );
-              //     context.read<LoginBloc>().add(
-              //           LoginEvent.login(
-              //             email: emailController.text,
-              //             password: passwordController.text,
-              //           ),
-              //         );
-              //   },
-              //   label: 'Login',
-              // );
             },
           ),
-
-          // const SpaceHeight(50.0),
-          // const Row(
-          //   children: [
-          //     Flexible(child: Divider()),
-          //     SizedBox(width: 14.0),
-          //     Text('OR'),
-          //     SizedBox(width: 14.0),
-          //     Flexible(child: Divider()),
-          //   ],
-          // ),
-          // const SpaceHeight(50.0),
-          // Button.outlined(
-          //   onPressed: () {},
-          //   label: 'Login with Google',
-          //   icon: Assets.images.google.image(height: 20.0),
-          // ),
           const SpaceHeight(50.0),
-          InkWell(
+          GestureDetector(
             onTap: () {
               context.goNamed(RouteConstants.register);
             },
             child: const Text.rich(
               TextSpan(
+                text: 'Belum punya akun?',
                 children: [
                   TextSpan(
-                    text: 'Not Registered yet? ',
-                    style: TextStyle(
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  TextSpan(
-                    text: 'Create an Account',
-                    style: TextStyle(
-                      color: AppColors.grey,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    text: ' Register',
+                    style: TextStyle(color: AppColors.mainTextColor),
                   ),
                 ],
               ),

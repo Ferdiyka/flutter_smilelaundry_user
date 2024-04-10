@@ -27,8 +27,13 @@ class OrderDetailPage extends StatefulWidget {
 
 class _OrderDetailPageState extends State<OrderDetailPage> {
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _reload();
+    context.read<UserBloc>().add(const UserEvent.getUser());
+  }
+
+  Future<void> _reload() async {
     context.read<UserBloc>().add(const UserEvent.getUser());
   }
 
@@ -124,6 +129,12 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _reload,
+          ),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
@@ -172,7 +183,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       },
                       onEditTap: () {
                         context.pushNamed(
-                          RouteConstants.addAddress,
+                          RouteConstants.editAddress,
                           pathParameters: PathParameters(
                             rootTab: RootTab.order,
                           ).toMap(),

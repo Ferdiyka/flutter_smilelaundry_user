@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'history_bloc.dart';
+part of 'register_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,58 +15,58 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$HistoryEvent {
+mixin _$RegisterEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getHistoryOrder,
+    required TResult Function(RegisterRequestModel data) register,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getHistoryOrder,
+    TResult? Function(RegisterRequestModel data)? register,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getHistoryOrder,
+    TResult Function(RegisterRequestModel data)? register,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_HistoryOrder value) getHistoryOrder,
+    required TResult Function(_Register value) register,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_HistoryOrder value)? getHistoryOrder,
+    TResult? Function(_Register value)? register,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_HistoryOrder value)? getHistoryOrder,
+    TResult Function(_Register value)? register,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $HistoryEventCopyWith<$Res> {
-  factory $HistoryEventCopyWith(
-          HistoryEvent value, $Res Function(HistoryEvent) then) =
-      _$HistoryEventCopyWithImpl<$Res, HistoryEvent>;
+abstract class $RegisterEventCopyWith<$Res> {
+  factory $RegisterEventCopyWith(
+          RegisterEvent value, $Res Function(RegisterEvent) then) =
+      _$RegisterEventCopyWithImpl<$Res, RegisterEvent>;
 }
 
 /// @nodoc
-class _$HistoryEventCopyWithImpl<$Res, $Val extends HistoryEvent>
-    implements $HistoryEventCopyWith<$Res> {
-  _$HistoryEventCopyWithImpl(this._value, this._then);
+class _$RegisterEventCopyWithImpl<$Res, $Val extends RegisterEvent>
+    implements $RegisterEventCopyWith<$Res> {
+  _$RegisterEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,7 +83,7 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$HistoryEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$RegisterEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
@@ -97,7 +97,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'HistoryEvent.started()';
+    return 'RegisterEvent.started()';
   }
 
   @override
@@ -113,7 +113,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getHistoryOrder,
+    required TResult Function(RegisterRequestModel data) register,
   }) {
     return started();
   }
@@ -122,7 +122,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getHistoryOrder,
+    TResult? Function(RegisterRequestModel data)? register,
   }) {
     return started?.call();
   }
@@ -131,7 +131,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getHistoryOrder,
+    TResult Function(RegisterRequestModel data)? register,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -144,7 +144,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_HistoryOrder value) getHistoryOrder,
+    required TResult Function(_Register value) register,
   }) {
     return started(this);
   }
@@ -153,7 +153,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_HistoryOrder value)? getHistoryOrder,
+    TResult? Function(_Register value)? register,
   }) {
     return started?.call(this);
   }
@@ -162,7 +162,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_HistoryOrder value)? getHistoryOrder,
+    TResult Function(_Register value)? register,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -172,72 +172,98 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements HistoryEvent {
+abstract class _Started implements RegisterEvent {
   const factory _Started() = _$StartedImpl;
 }
 
 /// @nodoc
-abstract class _$$HistoryOrderImplCopyWith<$Res> {
-  factory _$$HistoryOrderImplCopyWith(
-          _$HistoryOrderImpl value, $Res Function(_$HistoryOrderImpl) then) =
-      __$$HistoryOrderImplCopyWithImpl<$Res>;
+abstract class _$$RegisterImplCopyWith<$Res> {
+  factory _$$RegisterImplCopyWith(
+          _$RegisterImpl value, $Res Function(_$RegisterImpl) then) =
+      __$$RegisterImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({RegisterRequestModel data});
 }
 
 /// @nodoc
-class __$$HistoryOrderImplCopyWithImpl<$Res>
-    extends _$HistoryEventCopyWithImpl<$Res, _$HistoryOrderImpl>
-    implements _$$HistoryOrderImplCopyWith<$Res> {
-  __$$HistoryOrderImplCopyWithImpl(
-      _$HistoryOrderImpl _value, $Res Function(_$HistoryOrderImpl) _then)
+class __$$RegisterImplCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res, _$RegisterImpl>
+    implements _$$RegisterImplCopyWith<$Res> {
+  __$$RegisterImplCopyWithImpl(
+      _$RegisterImpl _value, $Res Function(_$RegisterImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_$RegisterImpl(
+      null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as RegisterRequestModel,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$HistoryOrderImpl implements _HistoryOrder {
-  const _$HistoryOrderImpl();
+class _$RegisterImpl implements _Register {
+  const _$RegisterImpl(this.data);
+
+  @override
+  final RegisterRequestModel data;
 
   @override
   String toString() {
-    return 'HistoryEvent.getHistoryOrder()';
+    return 'RegisterEvent.register(data: $data)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$HistoryOrderImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$RegisterImpl &&
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, data);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RegisterImplCopyWith<_$RegisterImpl> get copyWith =>
+      __$$RegisterImplCopyWithImpl<_$RegisterImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getHistoryOrder,
+    required TResult Function(RegisterRequestModel data) register,
   }) {
-    return getHistoryOrder();
+    return register(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getHistoryOrder,
+    TResult? Function(RegisterRequestModel data)? register,
   }) {
-    return getHistoryOrder?.call();
+    return register?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getHistoryOrder,
+    TResult Function(RegisterRequestModel data)? register,
     required TResult orElse(),
   }) {
-    if (getHistoryOrder != null) {
-      return getHistoryOrder();
+    if (register != null) {
+      return register(data);
     }
     return orElse();
   }
@@ -246,45 +272,50 @@ class _$HistoryOrderImpl implements _HistoryOrder {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_HistoryOrder value) getHistoryOrder,
+    required TResult Function(_Register value) register,
   }) {
-    return getHistoryOrder(this);
+    return register(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_HistoryOrder value)? getHistoryOrder,
+    TResult? Function(_Register value)? register,
   }) {
-    return getHistoryOrder?.call(this);
+    return register?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_HistoryOrder value)? getHistoryOrder,
+    TResult Function(_Register value)? register,
     required TResult orElse(),
   }) {
-    if (getHistoryOrder != null) {
-      return getHistoryOrder(this);
+    if (register != null) {
+      return register(this);
     }
     return orElse();
   }
 }
 
-abstract class _HistoryOrder implements HistoryEvent {
-  const factory _HistoryOrder() = _$HistoryOrderImpl;
+abstract class _Register implements RegisterEvent {
+  const factory _Register(final RegisterRequestModel data) = _$RegisterImpl;
+
+  RegisterRequestModel get data;
+  @JsonKey(ignore: true)
+  _$$RegisterImplCopyWith<_$RegisterImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$HistoryState {
+mixin _$RegisterState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(HistoryOrderResponseModel orders) loaded,
+    required TResult Function(AuthResponseModel authResponseModel) success,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -292,7 +323,7 @@ mixin _$HistoryState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(HistoryOrderResponseModel orders)? loaded,
+    TResult? Function(AuthResponseModel authResponseModel)? success,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -300,7 +331,7 @@ mixin _$HistoryState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(HistoryOrderResponseModel orders)? loaded,
+    TResult Function(AuthResponseModel authResponseModel)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -309,7 +340,7 @@ mixin _$HistoryState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -317,7 +348,7 @@ mixin _$HistoryState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -325,7 +356,7 @@ mixin _$HistoryState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
@@ -333,16 +364,16 @@ mixin _$HistoryState {
 }
 
 /// @nodoc
-abstract class $HistoryStateCopyWith<$Res> {
-  factory $HistoryStateCopyWith(
-          HistoryState value, $Res Function(HistoryState) then) =
-      _$HistoryStateCopyWithImpl<$Res, HistoryState>;
+abstract class $RegisterStateCopyWith<$Res> {
+  factory $RegisterStateCopyWith(
+          RegisterState value, $Res Function(RegisterState) then) =
+      _$RegisterStateCopyWithImpl<$Res, RegisterState>;
 }
 
 /// @nodoc
-class _$HistoryStateCopyWithImpl<$Res, $Val extends HistoryState>
-    implements $HistoryStateCopyWith<$Res> {
-  _$HistoryStateCopyWithImpl(this._value, this._then);
+class _$RegisterStateCopyWithImpl<$Res, $Val extends RegisterState>
+    implements $RegisterStateCopyWith<$Res> {
+  _$RegisterStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -359,7 +390,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$RegisterStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -373,7 +404,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'HistoryState.initial()';
+    return 'RegisterState.initial()';
   }
 
   @override
@@ -390,7 +421,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(HistoryOrderResponseModel orders) loaded,
+    required TResult Function(AuthResponseModel authResponseModel) success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -401,7 +432,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(HistoryOrderResponseModel orders)? loaded,
+    TResult? Function(AuthResponseModel authResponseModel)? success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -412,7 +443,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(HistoryOrderResponseModel orders)? loaded,
+    TResult Function(AuthResponseModel authResponseModel)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -427,7 +458,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
     return initial(this);
@@ -438,7 +469,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
@@ -449,7 +480,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -460,7 +491,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements HistoryState {
+abstract class _Initial implements RegisterState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -473,7 +504,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$RegisterStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -487,7 +518,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'HistoryState.loading()';
+    return 'RegisterState.loading()';
   }
 
   @override
@@ -504,7 +535,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(HistoryOrderResponseModel orders) loaded,
+    required TResult Function(AuthResponseModel authResponseModel) success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -515,7 +546,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(HistoryOrderResponseModel orders)? loaded,
+    TResult? Function(AuthResponseModel authResponseModel)? success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -526,7 +557,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(HistoryOrderResponseModel orders)? loaded,
+    TResult Function(AuthResponseModel authResponseModel)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -541,7 +572,7 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -552,7 +583,7 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -563,7 +594,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -574,80 +605,81 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements HistoryState {
+abstract class _Loading implements RegisterState {
   const factory _Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
+abstract class _$$SuccessImplCopyWith<$Res> {
+  factory _$$SuccessImplCopyWith(
+          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
+      __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({HistoryOrderResponseModel orders});
+  $Res call({AuthResponseModel authResponseModel});
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+class __$$SuccessImplCopyWithImpl<$Res>
+    extends _$RegisterStateCopyWithImpl<$Res, _$SuccessImpl>
+    implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(
+      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? orders = null,
+    Object? authResponseModel = null,
   }) {
-    return _then(_$LoadedImpl(
-      null == orders
-          ? _value.orders
-          : orders // ignore: cast_nullable_to_non_nullable
-              as HistoryOrderResponseModel,
+    return _then(_$SuccessImpl(
+      null == authResponseModel
+          ? _value.authResponseModel
+          : authResponseModel // ignore: cast_nullable_to_non_nullable
+              as AuthResponseModel,
     ));
   }
 }
 
 /// @nodoc
 
-class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl(this.orders);
+class _$SuccessImpl implements _Success {
+  const _$SuccessImpl(this.authResponseModel);
 
   @override
-  final HistoryOrderResponseModel orders;
+  final AuthResponseModel authResponseModel;
 
   @override
   String toString() {
-    return 'HistoryState.loaded(orders: $orders)';
+    return 'RegisterState.success(authResponseModel: $authResponseModel)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
-            (identical(other.orders, orders) || other.orders == orders));
+            other is _$SuccessImpl &&
+            (identical(other.authResponseModel, authResponseModel) ||
+                other.authResponseModel == authResponseModel));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, orders);
+  int get hashCode => Object.hash(runtimeType, authResponseModel);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(HistoryOrderResponseModel orders) loaded,
+    required TResult Function(AuthResponseModel authResponseModel) success,
     required TResult Function(String message) error,
   }) {
-    return loaded(orders);
+    return success(authResponseModel);
   }
 
   @override
@@ -655,10 +687,10 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(HistoryOrderResponseModel orders)? loaded,
+    TResult? Function(AuthResponseModel authResponseModel)? success,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(orders);
+    return success?.call(authResponseModel);
   }
 
   @override
@@ -666,12 +698,12 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(HistoryOrderResponseModel orders)? loaded,
+    TResult Function(AuthResponseModel authResponseModel)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
-    if (loaded != null) {
-      return loaded(orders);
+    if (success != null) {
+      return success(authResponseModel);
     }
     return orElse();
   }
@@ -681,10 +713,10 @@ class _$LoadedImpl implements _Loaded {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
-    return loaded(this);
+    return success(this);
   }
 
   @override
@@ -692,10 +724,10 @@ class _$LoadedImpl implements _Loaded {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
-    return loaded?.call(this);
+    return success?.call(this);
   }
 
   @override
@@ -703,23 +735,24 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (loaded != null) {
-      return loaded(this);
+    if (success != null) {
+      return success(this);
     }
     return orElse();
   }
 }
 
-abstract class _Loaded implements HistoryState {
-  const factory _Loaded(final HistoryOrderResponseModel orders) = _$LoadedImpl;
+abstract class _Success implements RegisterState {
+  const factory _Success(final AuthResponseModel authResponseModel) =
+      _$SuccessImpl;
 
-  HistoryOrderResponseModel get orders;
+  AuthResponseModel get authResponseModel;
   @JsonKey(ignore: true)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -734,7 +767,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$RegisterStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -764,7 +797,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'HistoryState.error(message: $message)';
+    return 'RegisterState.error(message: $message)';
   }
 
   @override
@@ -789,7 +822,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(HistoryOrderResponseModel orders) loaded,
+    required TResult Function(AuthResponseModel authResponseModel) success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -800,7 +833,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(HistoryOrderResponseModel orders)? loaded,
+    TResult? Function(AuthResponseModel authResponseModel)? success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -811,7 +844,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(HistoryOrderResponseModel orders)? loaded,
+    TResult Function(AuthResponseModel authResponseModel)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -826,7 +859,7 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -837,7 +870,7 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -848,7 +881,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -859,7 +892,7 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements HistoryState {
+abstract class _Error implements RegisterState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;

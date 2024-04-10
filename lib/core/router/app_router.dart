@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../data/models/responses/product_response_model.dart';
 import '../../presentation/address/models/address_model.dart';
 import '../../presentation/address/pages/add_address_page.dart';
+import '../../presentation/address/pages/edit_address_page.dart';
 import '../../presentation/address/pages/check_address_page.dart';
 import '../../presentation/auth/pages/login_page.dart';
 import '../../presentation/auth/pages/register_page.dart';
@@ -103,6 +104,34 @@ class AppRouter {
                     final titikLong = extras?['titikLong'] as double? ?? 0.0;
 
                     return AddAddressPage(
+                      currentAddress: currentAddress,
+                      haversineDistanceText: haversineDistanceText,
+                      manhattanDistanceText: manhattanDistanceText,
+                      euclideanDistanceText: euclideanDistanceText,
+                      titikLat: titikLat,
+                      titikLong: titikLong,
+                    );
+                  },
+                ),
+                GoRoute(
+                  name: RouteConstants.editAddress,
+                  path: RouteConstants.editAddressPath,
+                  builder: (context, state) {
+                    final Map<String, dynamic>? extras =
+                        state.extra as Map<String, dynamic>?;
+
+                    final currentAddress =
+                        extras?['currentAddress'] as String? ?? '';
+                    final haversineDistanceText =
+                        extras?['haversineDistanceText'] as double? ?? 0.0;
+                    final manhattanDistanceText =
+                        extras?['manhattanDistanceText'] as String? ?? '';
+                    final euclideanDistanceText =
+                        extras?['euclideanDistanceText'] as String? ?? '';
+                    final titikLat = extras?['titikLat'] as double? ?? 0.0;
+                    final titikLong = extras?['titikLong'] as double? ?? 0.0;
+
+                    return EditAddressPage(
                       currentAddress: currentAddress,
                       haversineDistanceText: haversineDistanceText,
                       manhattanDistanceText: manhattanDistanceText,

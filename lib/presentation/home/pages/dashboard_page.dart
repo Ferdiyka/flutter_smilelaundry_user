@@ -5,7 +5,6 @@ import 'package:flutter_smilelaundry_user/presentation/orders/pages/history_orde
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/constants/colors.dart';
 import '../../account/pages/account_page.dart';
-import '../../orders/pages/cart_page.dart';
 import 'home_page.dart';
 
 class DashboardPage extends StatefulWidget {

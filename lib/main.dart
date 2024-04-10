@@ -13,6 +13,7 @@ import 'core/router/app_router.dart';
 import 'data/datasources/user_remote_datasource.dart';
 import 'presentation/address/bloc/add_address/add_address_bloc.dart';
 import 'presentation/address/bloc/user/user_bloc.dart';
+import 'presentation/auth/bloc/register/register_bloc.dart';
 import 'presentation/auth/bloc/login/login_bloc.dart';
 import 'presentation/auth/bloc/logout/logout_bloc.dart';
 import 'presentation/home/bloc/checkout/checkout_bloc.dart';
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CheckoutBloc(),
+        ),
+        BlocProvider(
+          create: (context) => RegisterBloc(),
         ),
         BlocProvider(
           create: (context) => LoginBloc(AuthRemoteDatasource()),
