@@ -50,10 +50,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Smile Laundry'),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Assets.icons.notification.svg(height: 24.0),
-          ),
           BlocBuilder<CheckoutBloc, CheckoutState>(
             builder: (context, state) {
               return state.maybeWhen(

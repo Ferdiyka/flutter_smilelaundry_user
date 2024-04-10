@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 class OrderCard extends StatelessWidget {
   final OrderOrder data;
   final List<Product> products;
-  const OrderCard({super.key, required this.data, required this.products});
+  const OrderCard({Key? key, required this.data, required this.products});
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +52,25 @@ class OrderCard extends StatelessWidget {
             const SpaceHeight(5.0),
             const Divider(),
             const SpaceHeight(5.0),
-            ...products.map((product) => RowText(
-                  label: '${product.name ?? '-'} x ${product.quantity ?? 1}',
-                  value: (product.price ?? 0).currencyFormatRp,
-                )),
+            ...products.map((product) {
+              final productName = product.name ?? '-';
+              final quantityText =
+                  (productName.toLowerCase().contains('paket') &&
+                          (data.orderStatus == 'Pending' ||
+                              data.orderStatus == 'Picking Up'))
+                      ? '? Kg'
+                      : '${product.quantity ?? 1}';
+              final priceText = (productName.toLowerCase().contains('paket') &&
+                      (data.orderStatus == 'Pending' ||
+                          data.orderStatus == 'Picking Up'))
+                  ? 'Pending'
+                  : (product.price ?? 0).currencyFormatRp;
+
+              return RowText(
+                label: '$productName x $quantityText',
+                value: priceText,
+              );
+            }).toList(),
             const SpaceHeight(5.0),
             const Divider(),
             const SpaceHeight(10.0),
@@ -70,18 +85,25 @@ class OrderCard extends StatelessWidget {
     );
   }
 
+  String getProductPrice(Product product) {
+    if (product.name!.toLowerCase().contains('paket') &&
+        (data.orderStatus == 'Pending' || data.orderStatus == 'Picking Up')) {
+      return 'Pending';
+    } else {
+      return (product.price ?? 0).currencyFormatRp;
+    }
+  }
+
   int getTotalPrice() {
     return products.fold<int>(
       0,
       (total, product) =>
-          total + (product.price ?? 0) * (product.quantity ?? 1),
+          total +
+          ((product.name!.toLowerCase().contains('paket') &&
+                  (data.orderStatus == 'Pending' ||
+                      data.orderStatus == 'Picking Up'))
+              ? 0
+              : (product.price ?? 0) * (product.quantity ?? 1)),
     );
-  }
-
-  String getProductNames() {
-    return products
-        .map((product) => product.name ?? '-')
-        .where((name) => name.isNotEmpty)
-        .join(', ');
   }
 }

@@ -83,52 +83,94 @@ class CartTile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                    child: InkWell(
-                      onTap: () {
-                        context
-                            .read<CheckoutBloc>()
-                            .add(CheckoutEvent.removeItem(data.product));
-                      },
-                      child: const ColoredBox(
-                        color: AppColors.primary,
-                        child: Padding(
-                          padding: EdgeInsets.all(4.0),
-                          child: Icon(
-                            Icons.remove,
-                            color: AppColors.white,
+                  // Jika Paket
+                  if (data.product.name!.toLowerCase().contains('paket'))
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5.0)),
+                            child: InkWell(
+                              onTap: () {
+                                context.read<CheckoutBloc>().add(
+                                    CheckoutEvent.removeItem(data.product));
+                              },
+                              child: const ColoredBox(
+                                color: AppColors.primary,
+                                child: Padding(
+                                  padding: EdgeInsets.all(4.0),
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: AppColors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('? Kg'),
+                          ),
+                          const SpaceWidth(30.0),
+                        ],
+                      ),
+                    )
+                  else
+                    // Bukan Paket
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5.0)),
+                            child: InkWell(
+                              onTap: () {
+                                context.read<CheckoutBloc>().add(
+                                    CheckoutEvent.removeItem(data.product));
+                              },
+                              child: const ColoredBox(
+                                color: AppColors.primary,
+                                child: Padding(
+                                  padding: EdgeInsets.all(4.0),
+                                  child: Icon(
+                                    Icons.remove,
+                                    color: AppColors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('${data.quantity} Pcs'),
+                          ),
+                          ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5.0)),
+                            child: InkWell(
+                              onTap: () {
+                                context
+                                    .read<CheckoutBloc>()
+                                    .add(CheckoutEvent.addItem(data.product));
+                              },
+                              child: const ColoredBox(
+                                color: AppColors.primary,
+                                child: Padding(
+                                  padding: EdgeInsets.all(4.0),
+                                  child: Icon(
+                                    Icons.add,
+                                    color: AppColors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  const SpaceWidth(4.0),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('${data.quantity}'),
-                  ),
-                  const SpaceWidth(4.0),
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                    child: InkWell(
-                      onTap: () {
-                        context
-                            .read<CheckoutBloc>()
-                            .add(CheckoutEvent.addItem(data.product));
-                      },
-                      child: const ColoredBox(
-                        color: AppColors.primary,
-                        child: Padding(
-                          padding: EdgeInsets.all(4.0),
-                          child: Icon(
-                            Icons.add,
-                            color: AppColors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smilelaundry_user/core/core.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../core/components/buttons.dart';
 import '../../../core/router/app_router.dart';
@@ -25,10 +26,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
     final data = widget.data;
-    final productId = widget.productId;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Product Detail - $productId'),
+        title: const Text('Product Detail'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -40,10 +40,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           },
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Assets.icons.notification.svg(height: 24.0),
-          ),
           BlocBuilder<CheckoutBloc, CheckoutState>(
             builder: (context, state) {
               return state.maybeWhen(
@@ -109,10 +105,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
             const SizedBox(height: 8.0),
             Text(
-              '${data.price!.currencyFormatRp}' +
-                  (widget.productId == '1' || widget.productId == '2'
-                      ? "/kg"
-                      : "/pcs"),
+              '${data.price!.currencyFormatRp}${data.name!.toLowerCase().contains('paket') ? "/Kg" : "/Pcs"}',
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -159,25 +152,63 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               height: 80.0, // Ubah nilai sesuai kebutuhan
               child: Row(
                 children: [
-                  Expanded(
-                    child: Button.outlined(
-                      onPressed: () {
-                        context
-                            .read<CheckoutBloc>()
-                            .add(CheckoutEvent.addItem(data));
-                      },
-                      label: 'Add to cart',
+                  if (data.name!
+                      .toLowerCase()
+                      .contains('paket')) // Jika produk adalah "Paket"
+                    Expanded(
+                      child: Button.filled(
+                        onPressed: () {
+                          final isPaketExistAtCart =
+                              context.read<CheckoutBloc>().isPaketExistAtCart();
+
+                          if (isPaketExistAtCart) {
+                            QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.error,
+                              text: 'Hanya bisa memilih satu Paket saja',
+                            );
+                          } else {
+                            context
+                                .read<CheckoutBloc>()
+                                .add(CheckoutEvent.addItem(data));
+                            context.goNamed(
+                              RouteConstants.cart,
+                              pathParameters: PathParameters().toMap(),
+                            );
+                          }
+                        },
+                        label: 'Checkout Now',
+                      ),
+                    )
+                  else // Jika produk bukan "Paket"
+                    Expanded(
+                      child: Button.outlined(
+                        onPressed: () {
+                          context
+                              .read<CheckoutBloc>()
+                              .add(CheckoutEvent.addItem(data));
+                        },
+                        label: 'Add to Cart',
+                      ),
                     ),
-                  ),
                   const SizedBox(width: 16.0),
-                  Expanded(
-                    child: Button.filled(
-                      onPressed: () {
-                        // Checkout functionality
-                      },
-                      label: 'Checkout Now',
+                  if (!data.name!
+                      .toLowerCase()
+                      .contains('paket')) // Jika produk bukan "Paket"
+                    Expanded(
+                      child: Button.filled(
+                        onPressed: () {
+                          context
+                              .read<CheckoutBloc>()
+                              .add(CheckoutEvent.addItem(data));
+                          context.goNamed(
+                            RouteConstants.cart,
+                            pathParameters: PathParameters().toMap(),
+                          );
+                        },
+                        label: 'Checkout Now',
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),

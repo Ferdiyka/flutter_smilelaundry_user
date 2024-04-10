@@ -34,7 +34,7 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pesanan'),
+        title: const Text('History Order'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),

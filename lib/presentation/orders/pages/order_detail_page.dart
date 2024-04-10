@@ -74,7 +74,12 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   CircleAvatar(
                     backgroundColor: AppColors.light,
                     child: IconButton(
-                      onPressed: () => context.pop(),
+                      onPressed: () {
+                        context.goNamed(
+                          RouteConstants.root,
+                          pathParameters: PathParameters().toMap(),
+                        );
+                      },
                       icon: const Icon(
                         Icons.close,
                         color: AppColors.primary,
@@ -126,6 +131,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isPaketExistAtCart =
+        context.read<CheckoutBloc>().isPaketExistAtCart();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
@@ -199,7 +206,22 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           ),
           const SpaceHeight(36.0),
           const Divider(),
-          const SpaceHeight(8.0),
+          const SpaceHeight(36.0),
+          if (isPaketExistAtCart)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Note: Total harga di bawah belum termasuk harga Paket karena harus ditimbang terlebih dulu',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: AppColors.red,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.justify,
+                ),
+                const SpaceHeight(40.0),
+              ],
+            ),
           const Text(
             'Detail Belanja :',
             style: TextStyle(
@@ -217,22 +239,43 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ...products.map((product) {
-                        return Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '${product.product.name!} x ${product.quantity}',
+                        if (product.product.name!
+                            .toLowerCase()
+                            .contains('paket')) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '${product.product.name!} x ? Kg',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Text(
+                                'Pending',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w600),
                               ),
-                            ),
-                            Text(
-                              product.product.price!.currencyFormatRp,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        );
+                            ],
+                          );
+                        } else {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '${product.product.name!} x ${product.quantity} Pcs',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Text(
+                                product.product.price!.currencyFormatRp,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          );
+                        }
                       }),
                     ],
                   );
@@ -257,9 +300,18 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     loaded: (products) {
                       return products.fold<int>(
                         0,
-                        (previousValue, element) =>
-                            previousValue +
-                            (element.product.price! * element.quantity),
+                        (previousValue, element) {
+                          if (element.product.name!
+                              .toLowerCase()
+                              .contains('paket')) {
+                            // Jika nama produk mengandung "Paket", jangan tambahkan ke total
+                            return previousValue;
+                          } else {
+                            // Jika bukan produk "Paket", tambahkan ke total
+                            return previousValue +
+                                (element.product.price! * element.quantity);
+                          }
+                        },
                       );
                     },
                   );

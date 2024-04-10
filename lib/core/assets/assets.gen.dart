@@ -131,6 +131,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/google.png
   AssetGenImage get google => const AssetGenImage('assets/images/google.png');
 
+  /// File path: assets/images/infopaket.png
+  AssetGenImage get infopaket =>
+      const AssetGenImage('assets/images/infopaket.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
@@ -155,6 +159,7 @@ class $AssetsImagesGen {
         banner1,
         banner2,
         google,
+        infopaket,
         logo,
         oops,
         processOrder

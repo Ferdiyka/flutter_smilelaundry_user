@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../core/components/buttons.dart';
 import '../../../core/components/spaces.dart';
@@ -16,10 +17,25 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPaketExistAtCart =
+        context.read<CheckoutBloc>().isPaketExistAtCart();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
         actions: [
+          IconButton(
+            onPressed: () {
+              QuickAlert.show(
+                context: context,
+                type: QuickAlertType.info,
+                customAsset: 'assets/images/infopaket.png',
+                text:
+                    'Jika Anda memesan Kategori Paket maka berat pada Paket perlu ditimbang terlebih dahulu oleh Smile Laundry, untuk saat ini akan ditampilkan terlebih dahulu dengan tanda "?" ',
+              );
+            },
+            icon: const Icon(Icons
+                .info_outline), // Menggunakan widget Icon untuk menampilkan ikon
+          ),
           BlocBuilder<CheckoutBloc, CheckoutState>(
             builder: (context, state) {
               return state.maybeWhen(
@@ -86,37 +102,63 @@ class CartPage extends StatelessWidget {
             },
           ),
           const SpaceHeight(50.0),
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Total',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+              if (isPaketExistAtCart)
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Note: Berat Paket akan kami hitung dan tampilkan setelah ditimbang',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                    SpaceHeight(40.0),
+                  ],
                 ),
-              ),
-              const Spacer(),
-              BlocBuilder<CheckoutBloc, CheckoutState>(
-                builder: (context, state) {
-                  final total = state.maybeWhen(
-                    orElse: () => 0,
-                    loaded: (checkout) {
-                      return checkout.fold<int>(
-                        0,
-                        (previousValue, element) =>
-                            previousValue +
-                            (element.quantity * element.product.price!),
-                      );
-                    },
-                  );
-                  return Text(
-                    total.currencyFormatRp,
-                    style: const TextStyle(
+              Row(
+                children: [
+                  const Text(
+                    'Total',
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
-                  );
-                },
+                  ),
+                  const Spacer(),
+                  BlocBuilder<CheckoutBloc, CheckoutState>(
+                    builder: (context, state) {
+                      final total = state.maybeWhen(
+                        orElse: () => 0,
+                        loaded: (checkout) {
+                          return checkout.fold<int>(
+                            0,
+                            (previousValue, element) {
+                              // Jika produk tidak mengandung kata 'Paket', tambahkan biaya ke total
+                              if (!element.product.name!
+                                  .toLowerCase()
+                                  .contains('paket')) {
+                                return previousValue +
+                                    (element.quantity * element.product.price!);
+                              }
+                              return previousValue;
+                            },
+                          );
+                        },
+                      );
+                      return Text(
+                        total.currencyFormatRp,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -161,17 +203,6 @@ class CartPage extends StatelessWidget {
                 },
                 label: 'Checkout ($totalQty)',
               );
-              // return Button.filled(
-              //   onPressed: () {
-              //     context.goNamed(
-              //       RouteConstants.address,
-              //       pathParameters: PathParameters(
-              //         rootTab: RootTab.order,
-              //       ).toMap(),
-              //     );
-              //   },
-              //   label: 'Checkout (10)',
-              // );
             },
           ),
         ],
