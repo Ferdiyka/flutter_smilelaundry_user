@@ -21,7 +21,7 @@ class AuthRemoteDatasource {
     if (response.statusCode == 200) {
       return Right(AuthResponseModel.fromJson(response.body));
     } else {
-      return const Left('register gagal');
+      return Left(response.body);
     }
   }
 

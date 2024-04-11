@@ -54,16 +54,20 @@ class OrderCard extends StatelessWidget {
             const SpaceHeight(5.0),
             ...products.map((product) {
               final productName = product.name ?? '-';
+              final isPaketPendingOrPickingUp =
+                  productName.toLowerCase().contains('paket') &&
+                      (data.orderStatus == 'Pending' ||
+                          data.orderStatus == 'Picking Up');
+
               final quantityText =
                   (productName.toLowerCase().contains('paket') &&
                           (data.orderStatus == 'Pending' ||
                               data.orderStatus == 'Picking Up'))
                       ? '? Kg'
                       : '${product.quantity ?? 1}';
-              final priceText = (productName.toLowerCase().contains('paket') &&
-                      (data.orderStatus == 'Pending' ||
-                          data.orderStatus == 'Picking Up'))
-                  ? 'Pending'
+
+              final priceText = isPaketPendingOrPickingUp
+                  ? 'Coming Soon'
                   : (product.price ?? 0).currencyFormatRp;
 
               return RowText(
@@ -76,7 +80,9 @@ class OrderCard extends StatelessWidget {
             const SpaceHeight(10.0),
             RowText(
               label: 'Total Harga',
-              value: getTotalPrice().currencyFormatRp,
+              value: getTotalPrice() == 0
+                  ? "Coming Soon"
+                  : getTotalPrice().currencyFormatRp,
               fontWeight: FontWeight.bold,
             ),
           ],
@@ -85,25 +91,27 @@ class OrderCard extends StatelessWidget {
     );
   }
 
-  String getProductPrice(Product product) {
-    if (product.name!.toLowerCase().contains('paket') &&
-        (data.orderStatus == 'Pending' || data.orderStatus == 'Picking Up')) {
-      return 'Pending';
-    } else {
-      return (product.price ?? 0).currencyFormatRp;
-    }
-  }
-
   int getTotalPrice() {
-    return products.fold<int>(
-      0,
-      (total, product) =>
-          total +
-          ((product.name!.toLowerCase().contains('paket') &&
-                  (data.orderStatus == 'Pending' ||
-                      data.orderStatus == 'Picking Up'))
-              ? 0
-              : (product.price ?? 0) * (product.quantity ?? 1)),
-    );
+    // Check apakah ada setidaknya satu produk yang memenuhi kriteria
+    final hasPendingOrPickingUpPaket = products.any((product) =>
+        product.name!.toLowerCase().contains('paket') &&
+        (data.orderStatus == 'Pending' || data.orderStatus == 'Picking Up'));
+
+    // Jika ada produk yang memenuhi kriteria, set total harga menjadi "Coming Soon"
+    if (hasPendingOrPickingUpPaket) {
+      return 0; // Atur total harga menjadi 0 atau sesuai kebutuhan Anda
+    } else {
+      // Jika tidak ada produk yang memenuhi kriteria, hitung total harga normal
+      return products.fold<int>(
+        0,
+        (total, product) =>
+            total +
+            ((product.name!.toLowerCase().contains('paket') &&
+                    (data.orderStatus == 'Pending' ||
+                        data.orderStatus == 'Picking Up'))
+                ? 0
+                : (product.price ?? 0) * (product.quantity ?? 1)),
+      );
+    }
   }
 }

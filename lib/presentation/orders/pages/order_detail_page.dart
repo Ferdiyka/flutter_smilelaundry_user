@@ -116,7 +116,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                           pathParameters: PathParameters().toMap(),
                         );
                       },
-                      label: 'Lacak Pesanan',
+                      label: 'History Order',
                     ),
                   ),
                 ],
@@ -137,6 +137,18 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       appBar: AppBar(
         title: const Text('Checkout'),
         actions: [
+          IconButton(
+            onPressed: () {
+              QuickAlert.show(
+                context: context,
+                type: QuickAlertType.info,
+                text:
+                    'Jika Anda memesan Kategori Paket maka Total Belanja Anda akan terlihat Coming Soon, Total Belanjamu akan kami update setelah perhitungan berat Paket',
+              );
+            },
+            icon: const Icon(Icons
+                .info_outline), // Menggunakan widget Icon untuk menampilkan ikon
+          ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _reload,
@@ -208,18 +220,18 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           const Divider(),
           const SpaceHeight(36.0),
           if (isPaketExistAtCart)
-            Column(
+            const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Note: Total harga di bawah belum termasuk harga Paket karena harus ditimbang terlebih dulu',
+                Text(
+                  'Note: Total Belanja Coming Soon karena Paket karena harus ditimbang terlebih dulu',
                   style: TextStyle(
                       fontSize: 14,
                       color: AppColors.red,
                       fontWeight: FontWeight.bold),
                   textAlign: TextAlign.justify,
                 ),
-                const SpaceHeight(40.0),
+                SpaceHeight(40.0),
               ],
             ),
           const Text(
@@ -251,10 +263,9 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
-                              Text(
-                                'Pending',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w600),
+                              const Text(
+                                'Coming Soon',
+                                style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                             ],
                           );
@@ -297,27 +308,35 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 builder: (context, state) {
                   final total = state.maybeWhen(
                     orElse: () => 0,
-                    loaded: (products) {
-                      return products.fold<int>(
-                        0,
-                        (previousValue, element) {
-                          if (element.product.name!
-                              .toLowerCase()
-                              .contains('paket')) {
-                            // Jika nama produk mengandung "Paket", jangan tambahkan ke total
-                            return previousValue;
-                          } else {
-                            // Jika bukan produk "Paket", tambahkan ke total
-                            return previousValue +
-                                (element.product.price! * element.quantity);
-                          }
-                        },
-                      );
+                    loaded: (checkout) {
+                      // Cek apakah ada produk dengan nama yang mengandung kata 'Paket'
+                      final isPaketExist =
+                          context.read<CheckoutBloc>().isPaketExistAtCart();
+                      return isPaketExist
+                          ? 'Coming Soon'
+                          : // Jika ada, kembalikan 'Coming Soon'
+                          checkout.fold<int>(
+                              0,
+                              (previousValue, element) {
+                                // Jika produk tidak mengandung kata 'Paket', tambahkan biaya ke total
+                                if (!element.product.name!
+                                    .toLowerCase()
+                                    .contains('paket')) {
+                                  return previousValue +
+                                      (element.quantity *
+                                          element.product.price!);
+                                }
+                                return previousValue;
+                              },
+                            );
                     },
                   );
                   return Text(
-                    total.currencyFormatRp,
-                    style: const TextStyle(fontWeight: FontWeight.w600),
+                    total is int ? total.currencyFormatRp : total.toString(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   );
                 },
               ),

@@ -23,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,49 +32,57 @@ class _RegisterPageState extends State<RegisterPage> {
         centerTitle: true,
         title: const Text('Register'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(24.0),
-        children: [
-          CustomTextField(
-            controller: usernameController,
-            label: 'Nama',
-          ),
-          const SizedBox(height: 16.0),
-          CustomTextField(
-            controller: emailController,
-            label: 'Email Address',
-          ),
-          const SizedBox(height: 16.0),
-          CustomTextField(
-            controller: passwordController,
-            label: 'Password',
-            obscureText: true,
-          ),
-          const SizedBox(height: 16.0),
-          CustomTextField(
-            controller: confirmPasswordController,
-            label: 'Confirm Password',
-            obscureText: true,
-          ),
-          const SizedBox(height: 24.0),
-          BlocConsumer<RegisterBloc, RegisterState>(
-            listener: (context, state) {
-              state.maybeWhen(
-                orElse: () {},
-                success: (state) {
-                  AuthLocalDatasource().saveAuthData(state);
-                  QuickAlert.show(
-                      context: context,
-                      type: QuickAlertType.success,
-                      text: 'Berhasil membuat akun!',
-                      onConfirmBtnTap: () {
-                        context.goNamed(RouteConstants.login);
-                      });
+      body: BlocConsumer<RegisterBloc, RegisterState>(
+        listener: (context, state) {
+          state.maybeWhen(
+            orElse: () {},
+            success: (state) {
+              AuthLocalDatasource().saveAuthData(state);
+              QuickAlert.show(
+                context: context,
+                type: QuickAlertType.success,
+                text: 'Berhasil membuat akun!',
+                onConfirmBtnTap: () {
+                  context.goNamed(RouteConstants.login);
                 },
               );
             },
-            builder: (context, state) {
-              return state.maybeWhen(
+            error: (message) {
+              QuickAlert.show(
+                context: context,
+                type: QuickAlertType.error,
+                text: message,
+              );
+            },
+          );
+        },
+        builder: (context, state) {
+          return ListView(
+            padding: const EdgeInsets.all(24.0),
+            children: [
+              CustomTextField(
+                controller: usernameController,
+                label: 'Nama',
+              ),
+              const SizedBox(height: 16.0),
+              CustomTextField(
+                controller: emailController,
+                label: 'Email Address',
+              ),
+              const SizedBox(height: 16.0),
+              CustomTextField(
+                controller: passwordController,
+                label: 'Password',
+                obscureText: true,
+              ),
+              const SizedBox(height: 16.0),
+              CustomTextField(
+                controller: confirmPasswordController,
+                label: 'Confirm Password',
+                obscureText: true,
+              ),
+              const SizedBox(height: 24.0),
+              state.maybeWhen(
                 orElse: () {
                   return Button.filled(
                     onPressed: () {
@@ -127,28 +136,28 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: CircularProgressIndicator(),
                   );
                 },
-              );
-            },
-          ),
-          const SizedBox(height: 24.0),
-          GestureDetector(
-            onTap: () {
-              context.goNamed(RouteConstants.login);
-            },
-            child: const Text.rich(
-              TextSpan(
-                text: 'Sudah punya akun? ',
-                children: [
-                  TextSpan(
-                    text: 'Login',
-                    style: TextStyle(color: AppColors.mainTextColor),
-                  ),
-                ],
               ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
+              const SizedBox(height: 24.0),
+              GestureDetector(
+                onTap: () {
+                  context.goNamed(RouteConstants.login);
+                },
+                child: const Text.rich(
+                  TextSpan(
+                    text: 'Sudah punya akun? ',
+                    children: [
+                      TextSpan(
+                        text: 'Login',
+                        style: TextStyle(color: AppColors.mainTextColor),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

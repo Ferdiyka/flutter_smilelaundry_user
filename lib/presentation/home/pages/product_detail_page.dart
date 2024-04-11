@@ -187,6 +187,21 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           context
                               .read<CheckoutBloc>()
                               .add(CheckoutEvent.addItem(data));
+                          final snackBar = SnackBar(
+                            content: const Text('Item added to cart'),
+                            duration: const Duration(
+                                seconds: 2), // Adjust the duration as needed
+                            action: SnackBarAction(
+                              label: 'Undo', // Example action
+                              onPressed: () {
+                                context
+                                    .read<CheckoutBloc>()
+                                    .add(CheckoutEvent.removeItem(data));
+                              },
+                            ),
+                          );
+
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                         label: 'Add to Cart',
                       ),

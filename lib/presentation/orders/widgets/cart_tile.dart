@@ -109,8 +109,8 @@ class CartTile extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
                             child: Text('? Kg'),
                           ),
                           const SpaceWidth(30.0),

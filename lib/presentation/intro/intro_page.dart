@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smilelaundry_user/core/router/app_router.dart';
 import 'package:go_router/go_router.dart';
@@ -28,8 +30,7 @@ class _IntroPageState extends State<IntroPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    Assets.images.intro1
-                        .path, // Replace with your 'pick_up.png' image asset path
+                    Assets.images.intro1.path,
                     height: 200,
                   ),
                   const SizedBox(height: 32),
@@ -42,7 +43,7 @@ class _IntroPageState extends State<IntroPage> {
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    'Pesan lewat aplikasi kemudian pilih tanggal pick up, kami akan menjemput pakaianmu',
+                    'Pesan lewat aplikasi kemudian, kami akan menjemput pakaianmu',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 16),
                   ),
@@ -51,25 +52,41 @@ class _IntroPageState extends State<IntroPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                bottom: 50.0), // Adjust this value as needed
+            padding: const EdgeInsets.only(bottom: 50.0),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: SizedBox(
                   width: 350, // Set the desired width
-                  child: Button.filled(
-                    onPressed: () {
-                      // Navigate to the next intro page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => IntroPage2(),
-                        ),
-                      );
-                    },
-                    label: 'Continue',
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Button.filled(
+                        onPressed: () {
+                          // Navigate to the next intro page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => IntroPage2(),
+                            ),
+                          );
+                        },
+                        label: 'Continue',
+                      ),
+                      const SizedBox(height: 16),
+                      Button.outlined(
+                        onPressed: () {
+                          // Navigate to home page
+                          context.goNamed(
+                            RouteConstants.root,
+                            pathParameters: PathParameters().toMap(),
+                          );
+                        },
+                        label: 'Skip',
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -98,8 +115,7 @@ class IntroPage2 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    Assets.images.intro2
-                        .path, // Replace with your 'pick_up.png' image asset path
+                    Assets.images.intro2.path,
                     height: 200,
                   ),
                   const SizedBox(height: 32),
@@ -112,7 +128,7 @@ class IntroPage2 extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    'Setelah pakaianmu dijemput kami akan segera mencuci pakaianmu hingga bersih',
+                    'Setelah pakaianmu dijemput kami akan menimbang berat pakaianmu dan mencuci nya hingga bersih',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 16),
                   ),
@@ -129,17 +145,34 @@ class IntroPage2 extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: SizedBox(
                   width: 350, // Set the desired width
-                  child: Button.filled(
-                    onPressed: () {
-                      // Navigate to the next intro page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => IntroPage3(),
-                        ),
-                      );
-                    },
-                    label: 'Continue',
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Button.filled(
+                        onPressed: () {
+                          // Navigate to the next intro page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => IntroPage3(),
+                            ),
+                          );
+                        },
+                        label: 'Continue',
+                      ),
+                      const SizedBox(height: 16),
+                      Button.outlined(
+                        onPressed: () {
+                          // Navigate to home page
+                          context.goNamed(
+                            RouteConstants.root,
+                            pathParameters: PathParameters().toMap(),
+                          );
+                        },
+                        label: 'Skip',
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -167,8 +200,7 @@ class IntroPage3 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    Assets.images.intro3
-                        .path, // Replace with your 'pick_up.png' image asset path
+                    Assets.images.intro3.path,
                     height: 200,
                   ),
                   const SizedBox(height: 32),

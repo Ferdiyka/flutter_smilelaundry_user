@@ -28,7 +28,6 @@ class CartPage extends StatelessWidget {
               QuickAlert.show(
                 context: context,
                 type: QuickAlertType.info,
-                customAsset: 'assets/images/infopaket.png',
                 text:
                     'Jika Anda memesan Kategori Paket maka berat pada Paket perlu ditimbang terlebih dahulu oleh Smile Laundry, untuk saat ini akan ditampilkan terlebih dahulu dengan tanda "?" ',
               );
@@ -110,7 +109,7 @@ class CartPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Note: Berat Paket akan kami hitung dan tampilkan setelah ditimbang',
+                      'Note: Harga dan Berat Paket akan kami hitung dan tampilkan setelah ditimbang',
                       style: TextStyle(
                         fontSize: 14,
                       ),
@@ -134,23 +133,32 @@ class CartPage extends StatelessWidget {
                       final total = state.maybeWhen(
                         orElse: () => 0,
                         loaded: (checkout) {
-                          return checkout.fold<int>(
-                            0,
-                            (previousValue, element) {
-                              // Jika produk tidak mengandung kata 'Paket', tambahkan biaya ke total
-                              if (!element.product.name!
-                                  .toLowerCase()
-                                  .contains('paket')) {
-                                return previousValue +
-                                    (element.quantity * element.product.price!);
-                              }
-                              return previousValue;
-                            },
-                          );
+                          // Cek apakah ada produk dengan nama yang mengandung kata 'Paket'
+                          final isPaketExist =
+                              context.read<CheckoutBloc>().isPaketExistAtCart();
+                          return isPaketExist
+                              ? 'Coming Soon'
+                              : // Jika ada, kembalikan 'Coming Soon'
+                              checkout.fold<int>(
+                                  0,
+                                  (previousValue, element) {
+                                    // Jika produk tidak mengandung kata 'Paket', tambahkan biaya ke total
+                                    if (!element.product.name!
+                                        .toLowerCase()
+                                        .contains('paket')) {
+                                      return previousValue +
+                                          (element.quantity *
+                                              element.product.price!);
+                                    }
+                                    return previousValue;
+                                  },
+                                );
                         },
                       );
                       return Text(
-                        total.currencyFormatRp,
+                        total is int
+                            ? total.currencyFormatRp
+                            : total.toString(),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

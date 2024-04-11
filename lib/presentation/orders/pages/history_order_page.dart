@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quickalert/quickalert.dart';
 import '../../../core/components/spaces.dart';
 import '../../../data/datasources/auth_local_datasource.dart';
 import '../bloc/history/history_bloc.dart';
@@ -36,6 +37,18 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
       appBar: AppBar(
         title: const Text('History Order'),
         actions: [
+          IconButton(
+            onPressed: () {
+              QuickAlert.show(
+                context: context,
+                type: QuickAlertType.info,
+                text:
+                    'Gunakan tombol refresh untuk melihat update terbaru dari pesanan Anda',
+              );
+            },
+            icon: const Icon(Icons
+                .info_outline), // Menggunakan widget Icon untuk menampilkan ikon
+          ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _checkAuthStatus,
