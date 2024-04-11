@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smilelaundry_user/data/models/responses/history_order_response_model.dart';
 
@@ -74,7 +76,7 @@ class OrderCard extends StatelessWidget {
                 label: '$productName x $quantityText',
                 value: priceText,
               );
-            }).toList(),
+            }),
             const SpaceHeight(5.0),
             const Divider(),
             const SpaceHeight(10.0),

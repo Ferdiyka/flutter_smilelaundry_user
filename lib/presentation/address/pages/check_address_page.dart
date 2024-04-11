@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';

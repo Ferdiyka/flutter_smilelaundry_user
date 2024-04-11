@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/models/responses/product_response_model.dart';
-import '../../presentation/address/models/address_model.dart';
 import '../../presentation/address/pages/add_address_page.dart';
 import '../../presentation/address/pages/edit_address_page.dart';
 import '../../presentation/address/pages/check_address_page.dart';
