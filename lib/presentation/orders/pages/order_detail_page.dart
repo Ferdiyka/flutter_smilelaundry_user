@@ -107,18 +107,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       label: 'Back to Home',
                     ),
                   ),
-                  const SpaceWidth(20.0),
-                  Flexible(
-                    child: Button.outlined(
-                      onPressed: () {
-                        context.pushNamed(
-                          RouteConstants.orderList,
-                          pathParameters: PathParameters().toMap(),
-                        );
-                      },
-                      label: 'History Order',
-                    ),
-                  ),
                 ],
               ),
               const SpaceHeight(20.0),

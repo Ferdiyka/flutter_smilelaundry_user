@@ -7,6 +7,7 @@ import 'package:quickalert/quickalert.dart';
 import '../../../core/components/buttons.dart';
 import '../../../core/router/app_router.dart';
 import '../../../data/models/responses/product_response_model.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 import 'package:badges/badges.dart' as badges;
 
@@ -187,21 +188,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           context
                               .read<CheckoutBloc>()
                               .add(CheckoutEvent.addItem(data));
-                          final snackBar = SnackBar(
-                            content: const Text('Item added to cart'),
-                            duration: const Duration(
-                                seconds: 2), // Adjust the duration as needed
-                            action: SnackBarAction(
-                              label: 'Undo', // Example action
-                              onPressed: () {
-                                context
-                                    .read<CheckoutBloc>()
-                                    .add(CheckoutEvent.removeItem(data));
-                              },
-                            ),
-                          );
-
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          AnimatedSnackBar.material(
+                            'Product berhasil ditambah',
+                            type: AnimatedSnackBarType.success,
+                            duration: const Duration(seconds: 1),
+                          ).show(context);
                         },
                         label: 'Add to Cart',
                       ),
