@@ -28,6 +28,16 @@ class UserRemoteDatasource {
     }
   }
 
+  Future<bool> hasAddress() async {
+    final userEither = await getUser();
+    return userEither.fold(
+      (error) => false, // Jika terjadi kesalahan, kembalikan false
+      (user) =>
+          user.data?.address !=
+          null, // Jika alamat ada, kembalikan true, jika tidak, kembalikan false
+    );
+  }
+
   Future<Either<String, String>> addAddress(UserRequestModel data) async {
     try {
       final authData = await AuthLocalDatasource().getAuthData();

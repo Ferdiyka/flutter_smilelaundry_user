@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_smilelaundry_user/data/datasources/user_remote_datasource.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -186,7 +187,7 @@ class CartPage extends StatelessWidget {
               return Button.filled(
                 onPressed: () async {
                   final isAuth = await AuthLocalDatasource().isAuth();
-                  final hasAddress = await AuthLocalDatasource().hasAddress();
+                  final hasAddress = await UserRemoteDatasource().hasAddress();
                   if (!isAuth) {
                     context.pushNamed(
                       RouteConstants.login,

@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters, library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -50,11 +52,9 @@ class _AccountPageState extends State<AccountPage> {
 
   List<Widget> _buildLoggedInContent(BuildContext context) {
     return [
-      Text(
-        '',
-      ),
       ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
+          await AuthLocalDatasource().removeAuthData();
           context.read<LogoutBloc>().add(const LogoutEvent.logout());
           setState(() {
             _isLoggedIn = false;

@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_smilelaundry_user/data/datasources/auth_remote_datasource.dart';
 import 'package:flutter_smilelaundry_user/data/models/requests/register_request_model.dart';

@@ -1,5 +1,6 @@
+// ignore_for_file: use_super_parameters
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_smilelaundry_user/data/models/responses/user_response_model.dart';
 
 import '../../../core/components/spaces.dart';
