@@ -129,26 +129,35 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
             ),
             const SizedBox(height: 8.0),
-            Text(
-              data.description!,
-              style: const TextStyle(fontSize: 14.0),
-              textAlign: TextAlign.justify,
-            ),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Note',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.description!,
+                      style: const TextStyle(fontSize: 14.0),
+                      textAlign: TextAlign.justify,
+                    ),
+                    const SizedBox(height: 16.0),
+                    const Text(
+                      'Note',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      data.note!,
+                      style: const TextStyle(fontSize: 14.0),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 8.0),
-            Text(
-              data.note!,
-              style: const TextStyle(fontSize: 14.0),
-              textAlign: TextAlign.justify,
-            ),
-            const Spacer(),
+            const SizedBox(height: 16.0),
             SizedBox(
               height: 80.0, // Ubah nilai sesuai kebutuhan
               child: Row(

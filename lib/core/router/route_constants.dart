@@ -65,7 +65,15 @@ class RouteConstants {
   static const String shippingDetail = 'shipping_detail';
   static const String shippingDetailPath = 'shipping_detail';
 
-  /// route for page [OrderPage]
+  /// route for page [HistoryOrderPage]
   static const String orderList = 'order_list';
   static const String orderListPath = 'order_list';
+
+  /// route for page [AccountPage]
+  static const String accountPage = 'account_page';
+  static const String accountPagePath = 'account_page';
+
+  /// route for page [AboutPage]
+  static const String aboutPage = 'about_page';
+  static const String aboutPagePath = 'about_page';
 }

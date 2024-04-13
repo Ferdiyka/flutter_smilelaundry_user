@@ -62,7 +62,20 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
           return state.maybeWhen(
             orElse: () {
               return const Center(
-                child: Text('No Data'),
+                child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 25), // Ubah nilai sesuai kebutuhan Anda
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('No Data'),
+                        SizedBox(height: 8),
+                        Text(
+                          'Pastikan Anda sudah login atau coba tekan tombol refresh',
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )),
               );
             },
             loading: () => const Center(
@@ -71,7 +84,20 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
             loaded: (historyOrderResponseModel) {
               if (historyOrderResponseModel.orders!.isEmpty) {
                 return const Center(
-                  child: Text('No Data'),
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 25), // Ubah nilai sesuai kebutuhan Anda
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('No Data'),
+                          SizedBox(height: 8),
+                          Text(
+                            'Pastikan Anda sudah login atau coba tekan tombol refresh',
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      )),
                 );
               }
               return ListView.separated(

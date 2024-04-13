@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/models/responses/product_response_model.dart';
+import '../../presentation/account/pages/about_page.dart';
+import '../../presentation/account/pages/account_page.dart';
 import '../../presentation/address/pages/add_address_page.dart';
 import '../../presentation/address/pages/edit_address_page.dart';
 import '../../presentation/address/pages/check_address_page.dart';
@@ -73,6 +75,11 @@ class AppRouter {
             name: RouteConstants.orderList,
             path: RouteConstants.orderListPath,
             builder: (context, state) => const HistoryOrderPage(),
+          ),
+          GoRoute(
+            name: RouteConstants.aboutPage,
+            path: RouteConstants.aboutPagePath,
+            builder: (context, state) => const AboutPage(),
           ),
           GoRoute(
               name: RouteConstants.cart,

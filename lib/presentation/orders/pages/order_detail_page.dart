@@ -99,11 +99,11 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     child: Button.filled(
                       onPressed: () {
                         context.goNamed(
-                          RouteConstants.root,
+                          RouteConstants.orderList,
                           pathParameters: PathParameters().toMap(),
                         );
                       },
-                      label: 'Back to Home',
+                      label: 'Go to Order List',
                     ),
                   ),
                 ],
@@ -118,8 +118,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isPaketExistAtCart =
-        context.read<CheckoutBloc>().isPaketExistAtCart();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
@@ -130,7 +128,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 context: context,
                 type: QuickAlertType.info,
                 text:
-                    'Jika Anda memesan Kategori Paket maka Total Belanja Anda akan terlihat Coming Soon, Total Belanjamu akan kami update setelah perhitungan berat Paket',
+                    'Ketika Anda menambahkan atau mengedit Alamat, pastikan anda menekan tombol refresh yang berada di kanan atas untuk mengupdate perubahan',
               );
             },
             icon: const Icon(Icons
@@ -166,7 +164,16 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
               );
             },
           ),
-          const SpaceHeight(36.0),
+          const SpaceHeight(25.0),
+          const Text(
+            'Note: Gunakan tombol refresh ketika Anda selesai menambahkan atau mengedit Alamat',
+            style: TextStyle(
+                fontSize: 14,
+                color: AppColors.red,
+                fontWeight: FontWeight.bold),
+            textAlign: TextAlign.justify,
+          ),
+          const SpaceHeight(20.0),
           BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
               return state.when(
@@ -197,30 +204,16 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       },
                     );
                   } else {
-                    return const Text('Alamat tidak ditemukan');
+                    return const Text(
+                        'Alamat error, coba tekan tombol refresh');
                   }
                 },
               );
             },
           ),
-          const SpaceHeight(36.0),
+          const SpaceHeight(25.0),
           const Divider(),
-          const SpaceHeight(36.0),
-          if (isPaketExistAtCart)
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Note: Total Belanja Coming Soon karena Paket karena harus ditimbang terlebih dulu',
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.red,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.justify,
-                ),
-                SpaceHeight(40.0),
-              ],
-            ),
+          const SpaceHeight(25.0),
           const Text(
             'Detail Belanja :',
             style: TextStyle(
@@ -283,7 +276,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           ),
           const SpaceHeight(8.0),
           const Divider(),
-          const SpaceHeight(24.0),
+          const SpaceHeight(10.0),
           Row(
             children: [
               const Text(

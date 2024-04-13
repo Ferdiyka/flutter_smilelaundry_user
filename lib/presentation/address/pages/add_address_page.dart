@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../core/components/buttons.dart';
 import '../../../core/components/custom_text_field.dart';
 import '../../../core/components/spaces.dart';
+import '../../../core/constants/colors.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/assets/assets.gen.dart';
 import '../../../data/models/requests/user_request_model.dart';
@@ -168,24 +170,68 @@ class AddAddressPage extends StatelessWidget {
                 orElse: () {
                   return Button.filled(
                     onPressed: () {
-                      context.read<AddAddressBloc>().add(
-                            AddAddressEvent.addAddress(
-                              addressRequestModel: UserRequestModel(
-                                  name: nameController.text,
-                                  address: addressController.text,
-                                  noteAddress: noteAddressController.text,
-                                  phone: phoneController.text,
-                                  radius: haversineDistanceText,
-                                  latitudeUser: titikLat,
-                                  longitudeUser: titikLong),
-                            ),
-                          );
-                      context.goNamed(
-                        RouteConstants.orderDetail,
-                        pathParameters: PathParameters(
-                          rootTab: RootTab.order,
-                        ).toMap(),
-                      );
+                      if (addressController.text.isEmpty ||
+                          noteAddressController.text.isEmpty ||
+                          nameController.text.isEmpty ||
+                          phoneController.text.isEmpty) {
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.error,
+                          text: 'Harap isi semua input yang diperlukan',
+                          confirmBtnText: 'OK',
+                          textColor: AppColors.mainTextColor,
+                          confirmBtnColor: AppColors.secondaryColor,
+                        );
+                      } else if (haversineDistanceText > 500.00) {
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.error,
+                          text:
+                              'Maaf, radius tidak boleh melebihi 500 meter. Untuk itu Anda tidak bisa memesan di aplikasi ini, Anda harus memesan langsung ke toko. Harap pahami rules kami di halaman About',
+                          confirmBtnText: 'OK',
+                          textColor: AppColors.mainTextColor,
+                          confirmBtnColor: AppColors.secondaryColor,
+                          onConfirmBtnTap: () {
+                            context.goNamed(
+                              RouteConstants.aboutPage,
+                              pathParameters: PathParameters(
+                                rootTab: RootTab.account,
+                              ).toMap(),
+                            );
+                          },
+                        );
+                      } else {
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.confirm,
+                          text: 'Apa Anda yakin alamat sudah benar?',
+                          confirmBtnText: 'Yes',
+                          cancelBtnText: 'No',
+                          textColor: AppColors.mainTextColor,
+                          confirmBtnColor: AppColors.secondaryColor,
+                          onConfirmBtnTap: () {
+                            context.read<AddAddressBloc>().add(
+                                  AddAddressEvent.addAddress(
+                                    addressRequestModel: UserRequestModel(
+                                      name: nameController.text,
+                                      address: addressController.text,
+                                      noteAddress: noteAddressController.text,
+                                      phone: phoneController.text,
+                                      radius: haversineDistanceText,
+                                      latitudeUser: titikLat,
+                                      longitudeUser: titikLong,
+                                    ),
+                                  ),
+                                );
+                            context.goNamed(
+                              RouteConstants.orderDetail,
+                              pathParameters: PathParameters(
+                                rootTab: RootTab.order,
+                              ).toMap(),
+                            );
+                          },
+                        );
+                      }
                     },
                     label: 'Tambah Alamat',
                   );

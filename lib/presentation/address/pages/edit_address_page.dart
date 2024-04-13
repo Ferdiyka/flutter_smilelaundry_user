@@ -189,15 +189,15 @@ class EditAddressPage extends StatelessWidget {
                                   context: context,
                                   type: QuickAlertType.error,
                                   text:
-                                      'Maaf, radius tidak boleh melebihi 500 meter',
+                                      'Maaf, radius tidak boleh melebihi 500 meter. Untuk itu Anda tidak bisa memesan di aplikasi ini, Anda harus memesan langsung ke toko. Harap pahami rules kami di halaman About',
                                   confirmBtnText: 'OK',
                                   textColor: AppColors.mainTextColor,
                                   confirmBtnColor: AppColors.secondaryColor,
                                   onConfirmBtnTap: () {
                                     context.goNamed(
-                                      RouteConstants.root,
+                                      RouteConstants.aboutPage,
                                       pathParameters: PathParameters(
-                                        rootTab: RootTab.home,
+                                        rootTab: RootTab.account,
                                       ).toMap(),
                                     );
                                   },
@@ -243,7 +243,7 @@ class EditAddressPage extends StatelessWidget {
                                 );
                               }
                             },
-                            label: 'Tambah Alamat',
+                            label: 'Edit Alamat',
                           );
                         },
                         loading: () {
