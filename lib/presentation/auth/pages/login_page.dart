@@ -91,6 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   QuickAlert.show(
                     context: context,
                     type: QuickAlertType.error,
+                    title: "Terjadi Kesalahan",
                     text: message,
                   );
                 },
@@ -107,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                         QuickAlert.show(
                           context: context,
                           type: QuickAlertType.error,
+                          title: "Terjadi Kesalahan",
                           text: 'Email dan Password harus diisi',
                         );
                       } else {

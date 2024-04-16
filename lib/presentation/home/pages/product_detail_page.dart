@@ -175,6 +175,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             QuickAlert.show(
                               context: context,
                               type: QuickAlertType.error,
+                              title: "Terjadi Kesalahan",
                               text: 'Hanya bisa memilih satu Paket saja',
                             );
                           } else {

@@ -128,7 +128,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 context: context,
                 type: QuickAlertType.info,
                 text:
-                    'Ketika Anda menambahkan atau mengedit Alamat, pastikan anda menekan tombol refresh yang berada di kanan atas untuk mengupdate perubahan',
+                    'Ketika Anda memesan Paket (Reguler/Express) harga paket nya akan tertulis "Coming soon" sebab berat dari paket perlu ditimbang terlebih dahulu oleh Smile Laundry. Harga dan Total Belanja Anda akan muncul ketika paket Anda sudah ditimbang',
               );
             },
             icon: const Icon(Icons
@@ -213,6 +213,15 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           ),
           const SpaceHeight(25.0),
           const Divider(),
+          const SpaceHeight(25.0),
+          const Text(
+            'Note: Anda tetap bisa melanjutkan proses checkout apabila Total Belanja atau Harga Anda tertulis "Coming Soon" (informasi lebih lanjut tekan tombol Info di pojok atas kanan)',
+            style: TextStyle(
+                fontSize: 14,
+                color: AppColors.red,
+                fontWeight: FontWeight.bold),
+            textAlign: TextAlign.justify,
+          ),
           const SpaceHeight(25.0),
           const Text(
             'Detail Belanja :',

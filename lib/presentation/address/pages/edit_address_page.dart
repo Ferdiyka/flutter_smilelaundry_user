@@ -58,6 +58,14 @@ class EditAddressPage extends StatelessWidget {
           ),
           const SpaceHeight(24.0),
           const Text(
+            'Silakan melakukan pengecekan radius dengan menekan tombol "Check"',
+            style: TextStyle(
+              fontSize: 14,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+          const SpaceHeight(24.0),
+          const Text(
             'GPS',
             style: TextStyle(
               fontSize: 16,
@@ -188,6 +196,7 @@ class EditAddressPage extends StatelessWidget {
                                 QuickAlert.show(
                                   context: context,
                                   type: QuickAlertType.error,
+                                  title: "Terjadi Kesalahan",
                                   text:
                                       'Maaf, radius tidak boleh melebihi 500 meter. Untuk itu Anda tidak bisa memesan di aplikasi ini, Anda harus memesan langsung ke toko. Harap pahami rules kami di halaman About',
                                   confirmBtnText: 'OK',
@@ -196,9 +205,6 @@ class EditAddressPage extends StatelessWidget {
                                   onConfirmBtnTap: () {
                                     context.goNamed(
                                       RouteConstants.aboutPage,
-                                      pathParameters: PathParameters(
-                                        rootTab: RootTab.account,
-                                      ).toMap(),
                                     );
                                   },
                                 );

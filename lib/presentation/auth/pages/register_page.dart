@@ -51,6 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
               QuickAlert.show(
                 context: context,
                 type: QuickAlertType.error,
+                title: "Terjadi Kesalahan",
                 text: message,
               );
             },
@@ -95,6 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         QuickAlert.show(
                           context: context,
                           type: QuickAlertType.error,
+                          title: "Terjadi Kesalahan",
                           text: 'Semua input harus diisi',
                         );
                       } else if (!isEmailValid(emailController.text)) {
@@ -102,6 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         QuickAlert.show(
                           context: context,
                           type: QuickAlertType.error,
+                          title: "Terjadi Kesalahan",
                           text: 'Email tidak valid',
                         );
                       } else {
@@ -112,6 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           QuickAlert.show(
                             context: context,
                             type: QuickAlertType.error,
+                            title: "Terjadi Kesalahan",
                             text:
                                 'Password dan konfirmasi password tidak cocok',
                           );
