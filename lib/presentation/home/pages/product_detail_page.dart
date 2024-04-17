@@ -228,9 +228,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                     ),
                   const SizedBox(width: 16.0),
-                  if (!data.name!
-                      .toLowerCase()
-                      .contains('paket')) // Jika produk bukan "Paket"
+                  if (!data.name!.toLowerCase().contains('paket'))
                     Expanded(
                       child: Button.filled(
                         onPressed: () {

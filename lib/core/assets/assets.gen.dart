@@ -147,6 +147,9 @@ class $AssetsImagesGen {
 
   $AssetsImagesProductsGen get products => const $AssetsImagesProductsGen();
 
+  /// File path: assets/images/warning.png
+  AssetGenImage get warning => const AssetGenImage('assets/images/warning.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         intro1,
@@ -162,7 +165,8 @@ class $AssetsImagesGen {
         infopaket,
         logo,
         oops,
-        processOrder
+        processOrder,
+        warning
       ];
 }
 

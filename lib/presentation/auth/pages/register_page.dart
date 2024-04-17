@@ -167,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       TextSpan(
                         text: 'Login',
-                        style: TextStyle(color: AppColors.mainTextColor),
+                        style: TextStyle(color: AppColors.mainColor),
                       ),
                     ],
                   ),

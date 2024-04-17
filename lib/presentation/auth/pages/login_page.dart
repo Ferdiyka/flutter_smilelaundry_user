@@ -175,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   TextSpan(
                     text: ' Register',
-                    style: TextStyle(color: AppColors.mainTextColor),
+                    style: TextStyle(color: AppColors.mainColor),
                   ),
                 ],
               ),
