@@ -1,9 +1,8 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 import 'package:flutter_smilelaundry_user/data/models/responses/history_order_response_model.dart';
 
-import '../../../core/components/buttons.dart';
 import '../../../core/components/spaces.dart';
 import '../../../core/core.dart';
 // import '../../home/models/product_quantity.dart';
@@ -35,12 +34,28 @@ class OrderCard extends StatelessWidget {
                   'Order #${data.id ?? '-'}',
                   style: const TextStyle(fontWeight: FontWeight.w700),
                 ),
-                Button.filled(
+                ElevatedButton(
                   onPressed: () {},
-                  label: data.orderStatus!,
-                  height: 20.0,
-                  width: 110.0,
-                  fontSize: 11.0,
+                  child: SizedBox(
+                    width: 80.0,
+                    child: Text(
+                      data.orderStatus!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 11.0,
+                      ),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    padding: EdgeInsets.zero,
+                    backgroundColor: AppColors.secondaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -58,12 +73,12 @@ class OrderCard extends StatelessWidget {
               final productName = product.name ?? '-';
               final isPaketPendingOrPickingUp =
                   productName.toLowerCase().contains('paket') &&
-                      (data.orderStatus == 'Pending' ||
+                      (data.orderStatus == 'Menunggu Konfirmasi' ||
                           data.orderStatus == 'Picking Up');
 
               final quantityText =
                   (productName.toLowerCase().contains('paket') &&
-                          (data.orderStatus == 'Pending' ||
+                          (data.orderStatus == 'Menunggu Konfirmasi' ||
                               data.orderStatus == 'Picking Up'))
                       ? '? Kg'
                       : '${product.quantity ?? 1}';
@@ -97,7 +112,8 @@ class OrderCard extends StatelessWidget {
     // Check apakah ada setidaknya satu produk yang memenuhi kriteria
     final hasPendingOrPickingUpPaket = products.any((product) =>
         product.name!.toLowerCase().contains('paket') &&
-        (data.orderStatus == 'Pending' || data.orderStatus == 'Picking Up'));
+        (data.orderStatus == 'Menunggu Konfirmasi' ||
+            data.orderStatus == 'Picking Up'));
 
     // Jika ada produk yang memenuhi kriteria, set total harga menjadi "Coming Soon"
     if (hasPendingOrPickingUpPaket) {
@@ -109,7 +125,7 @@ class OrderCard extends StatelessWidget {
         (total, product) =>
             total +
             ((product.name!.toLowerCase().contains('paket') &&
-                    (data.orderStatus == 'Pending' ||
+                    (data.orderStatus == 'Menunggu Konfirmasi' ||
                         data.orderStatus == 'Picking Up'))
                 ? 0
                 : (product.price ?? 0) * (product.quantity ?? 1)),

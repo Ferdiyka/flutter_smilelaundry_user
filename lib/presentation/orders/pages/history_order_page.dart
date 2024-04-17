@@ -33,6 +33,10 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
     }
   }
 
+  Future<void> _onRefresh() async {
+    await _checkAuthStatus();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,23 +52,19 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
                     'Gunakan tombol refresh untuk melihat update terbaru dari pesanan Anda',
               );
             },
-            icon: const Icon(Icons
-                .info_outline), // Menggunakan widget Icon untuk menampilkan ikon
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _checkAuthStatus,
+            icon: const Icon(Icons.info_outline),
           ),
         ],
       ),
-      body: BlocBuilder<HistoryBloc, HistoryState>(
-        builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return const Center(
-                child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 25), // Ubah nilai sesuai kebutuhan Anda
+      body: RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: BlocBuilder<HistoryBloc, HistoryState>(
+          builder: (context, state) {
+            return state.maybeWhen(
+              orElse: () {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -75,18 +75,18 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
                           textAlign: TextAlign.center,
                         ),
                       ],
-                    )),
-              );
-            },
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
-            loaded: (historyOrderResponseModel) {
-              if (historyOrderResponseModel.orders!.isEmpty) {
-                return const Center(
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 25), // Ubah nilai sesuai kebutuhan Anda
+                    ),
+                  ),
+                );
+              },
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
+              loaded: (historyOrderResponseModel) {
+                if (historyOrderResponseModel.orders!.isEmpty) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -97,24 +97,27 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
                             textAlign: TextAlign.center,
                           ),
                         ],
-                      )),
-                );
-              }
-              return ListView.separated(
-                padding: const EdgeInsets.all(16.0),
-                separatorBuilder: (context, index) => const SpaceHeight(16.0),
-                itemCount: historyOrderResponseModel.orders!.length,
-                itemBuilder: (context, index) {
-                  final orderElement = historyOrderResponseModel.orders![index];
-                  return OrderCard(
-                    data: orderElement.order!,
-                    products: orderElement.products!,
+                      ),
+                    ),
                   );
-                },
-              );
-            },
-          );
-        },
+                }
+                return ListView.separated(
+                  padding: const EdgeInsets.all(16.0),
+                  separatorBuilder: (context, index) => const SpaceHeight(16.0),
+                  itemCount: historyOrderResponseModel.orders!.length,
+                  itemBuilder: (context, index) {
+                    final orderElement =
+                        historyOrderResponseModel.orders![index];
+                    return OrderCard(
+                      data: orderElement.order!,
+                      products: orderElement.products!,
+                    );
+                  },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

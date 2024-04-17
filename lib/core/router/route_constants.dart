@@ -19,7 +19,7 @@ class RouteConstants {
 
   /// route for page [VerificationPage]
   static const String verification = 'verification';
-  static const String verificationPath = 'verification';
+  static const String verificationPath = '/verification';
 
   /// route for page [DashboardPage]
   static const String root = 'root';

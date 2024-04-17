@@ -1,8 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smilelaundry_user/data/datasources/auth_local_datasource.dart';
+import 'package:flutter_smilelaundry_user/data/datasources/firebase_messanging_remote_datasource.dart';
 import 'package:flutter_smilelaundry_user/presentation/auth/bloc/login/login_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quickalert/quickalert.dart';
@@ -11,7 +13,6 @@ import '../../../core/components/buttons.dart';
 import '../../../core/components/spaces.dart';
 import '../../../core/core.dart';
 import '../../../core/router/app_router.dart';
-import '../../../data/datasources/firebase_messanging_remote_datasource.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,6 +22,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _auth = FirebaseAuth.instance;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -80,12 +82,43 @@ class _LoginPageState extends State<LoginPage> {
               state.maybeWhen(
                 orElse: () {},
                 loaded: (data) async {
-                  AuthLocalDatasource().saveAuthData(data);
                   await FirebaseMessagingRemoteDatasource().initialize();
-                  context.goNamed(
-                    RouteConstants.root,
-                    pathParameters: PathParameters().toMap(),
-                  );
+                  try {
+                    // Sign in the user with Firebase Auth
+                    UserCredential userCredential =
+                        await _auth.signInWithEmailAndPassword(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+
+                    // Check if the user's email is verified
+                    if (!userCredential.user!.emailVerified) {
+                      // Show an error message if the email is not verified
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.error,
+                        title: "Terjadi Kesalahan",
+                        text:
+                            'Email Anda belum terverifikasi. Silakan cek email Anda2.',
+                      );
+                      return;
+                    }
+                    AuthLocalDatasource().saveAuthData(data);
+                    await FirebaseMessagingRemoteDatasource().initialize();
+                    context.goNamed(
+                      RouteConstants.root,
+                      pathParameters: PathParameters().toMap(),
+                    );
+                  } catch (e) {
+                    // Handle login error
+                    QuickAlert.show(
+                      context: context,
+                      type: QuickAlertType.error,
+                      title: "Terjadi Kesalahan",
+                      text:
+                          "Email Anda belum terverifikasi. Silakan cek email Anda3.",
+                    );
+                  }
                 },
                 error: (message) {
                   QuickAlert.show(
@@ -101,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
               return state.maybeWhen(
                 orElse: () {
                   return Button.filled(
-                    onPressed: () {
+                    onPressed: () async {
                       // Validasi email dan password
                       if (emailController.text.isEmpty ||
                           passwordController.text.isEmpty) {

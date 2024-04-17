@@ -174,43 +174,54 @@ class CartPage extends StatelessWidget {
           const SpaceHeight(40.0),
           BlocBuilder<CheckoutBloc, CheckoutState>(
             builder: (context, state) {
-              final totalQty = state.maybeWhen(
-                orElse: () => 0,
+              return state.maybeWhen(
+                orElse: () => const SizedBox.shrink(),
                 loaded: (checkout) {
-                  return checkout.fold<int>(
+                  final totalQty = checkout.fold<int>(
                     0,
                     (previousValue, element) =>
                         previousValue + element.quantity,
                   );
+                  return totalQty > 0
+                      ? Button.filled(
+                          onPressed: () async {
+                            final isAuth = await AuthLocalDatasource().isAuth();
+                            final hasAddress =
+                                await UserRemoteDatasource().hasAddress();
+                            if (!isAuth) {
+                              context.pushNamed(
+                                RouteConstants.login,
+                              );
+                            } else if (!hasAddress) {
+                              // Jika pengguna tidak memiliki alamat
+                              context.goNamed(
+                                RouteConstants.addAddress,
+                                pathParameters: PathParameters(
+                                  rootTab: RootTab.order,
+                                ).toMap(),
+                              );
+                            } else {
+                              // Jika pengguna sudah memiliki alamat
+                              context.goNamed(
+                                RouteConstants.orderDetail,
+                                pathParameters: PathParameters(
+                                  rootTab: RootTab.order,
+                                ).toMap(),
+                              );
+                            }
+                          },
+                          label: 'Checkout ($totalQty)',
+                        )
+                      : const Center(
+                          child: Text(
+                            'Tambahkan pesananmu ke dalam keranjang',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        );
                 },
-              );
-              return Button.filled(
-                onPressed: () async {
-                  final isAuth = await AuthLocalDatasource().isAuth();
-                  final hasAddress = await UserRemoteDatasource().hasAddress();
-                  if (!isAuth) {
-                    context.pushNamed(
-                      RouteConstants.login,
-                    );
-                  } else if (!hasAddress) {
-                    // Jika pengguna tidak memiliki alamat
-                    context.goNamed(
-                      RouteConstants.addAddress,
-                      pathParameters: PathParameters(
-                        rootTab: RootTab.order,
-                      ).toMap(),
-                    );
-                  } else {
-                    // Jika pengguna sudah memiliki alamat
-                    context.goNamed(
-                      RouteConstants.orderDetail,
-                      pathParameters: PathParameters(
-                        rootTab: RootTab.order,
-                      ).toMap(),
-                    );
-                  }
-                },
-                label: 'Checkout ($totalQty)',
               );
             },
           ),

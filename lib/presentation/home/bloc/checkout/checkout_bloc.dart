@@ -65,4 +65,22 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     return currentState.products
         .any((item) => item.product.name!.toLowerCase().contains('paket'));
   }
+
+  bool isPaketRegulerExist() {
+    final currentState = state as _Loaded;
+    final count = currentState.products
+        .where((item) =>
+            item.product.name!.toLowerCase().contains('paket reguler'))
+        .length;
+    return count > 0;
+  }
+
+  bool isPaketExpressExist() {
+    final currentState = state as _Loaded;
+    final count = currentState.products
+        .where((item) =>
+            item.product.name!.toLowerCase().contains('paket express'))
+        .length;
+    return count > 0;
+  }
 }

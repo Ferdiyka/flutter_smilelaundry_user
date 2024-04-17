@@ -9,6 +9,7 @@ import '../../presentation/address/pages/edit_address_page.dart';
 import '../../presentation/address/pages/check_address_page.dart';
 import '../../presentation/auth/pages/login_page.dart';
 import '../../presentation/auth/pages/register_page.dart';
+import '../../presentation/auth/pages/verification_page.dart';
 import '../../presentation/home/pages/dashboard_page.dart';
 import '../../presentation/home/pages/product_detail_page.dart';
 import '../../presentation/intro/intro_page.dart';
@@ -46,6 +47,24 @@ class AppRouter {
             builder: (context, state) => const RegisterPage(),
           ),
         ],
+      ),
+      GoRoute(
+        name: RouteConstants.verification,
+        path: RouteConstants.verificationPath,
+        builder: (context, state) {
+          final Map<String, dynamic>? extras =
+              state.extra as Map<String, dynamic>?;
+
+          final email = extras?['email'] as String? ?? '';
+          final password = extras?['password'] as String? ?? '';
+          final name = extras?['name'] as String? ?? '';
+
+          return VerificationPage(
+            email: email,
+            password: password,
+            name: name,
+          );
+        },
       ),
       GoRoute(
         name: RouteConstants.root,

@@ -148,6 +148,13 @@ class EditAddressPage extends StatelessWidget {
             label: 'Alamat',
             readOnly: true,
           ),
+          const Text(
+            'Alamat akan otomatis terisi dan tidak dapat diedit ketika Anda sudah menekan tombol check',
+            style: TextStyle(
+              fontSize: 10,
+            ),
+            textAlign: TextAlign.justify,
+          ),
           const SpaceHeight(24.0),
           CustomTextField(
             controller: noteAddressController,
@@ -198,15 +205,10 @@ class EditAddressPage extends StatelessWidget {
                                   type: QuickAlertType.error,
                                   title: "Terjadi Kesalahan",
                                   text:
-                                      'Maaf, radius tidak boleh melebihi 500 meter. Untuk itu Anda tidak bisa memesan di aplikasi ini, Anda harus memesan langsung ke toko. Harap pahami rules kami di halaman About',
+                                      'Maaf, radius tidak boleh melebihi 500 meter. Untuk itu Anda tidak bisa memesan di aplikasi ini, Untuk informasi lebih lanjut silakan hubungi kontak yang tertera di halaman about atau datang langsung ke alamat kami',
                                   confirmBtnText: 'OK',
                                   textColor: AppColors.mainTextColor,
                                   confirmBtnColor: AppColors.secondaryColor,
-                                  onConfirmBtnTap: () {
-                                    context.goNamed(
-                                      RouteConstants.aboutPage,
-                                    );
-                                  },
                                 );
                               } else {
                                 QuickAlert.show(

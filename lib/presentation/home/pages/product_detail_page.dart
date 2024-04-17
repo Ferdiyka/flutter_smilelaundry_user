@@ -168,15 +168,35 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     Expanded(
                       child: Button.filled(
                         onPressed: () {
-                          final isPaketExistAtCart =
-                              context.read<CheckoutBloc>().isPaketExistAtCart();
-
-                          if (isPaketExistAtCart) {
+                          final isPaketExpressExist = context
+                              .read<CheckoutBloc>()
+                              .isPaketExpressExist();
+                          final isPaketRegulerExist = context
+                              .read<CheckoutBloc>()
+                              .isPaketRegulerExist();
+                          //Jika product yang ditambah adalah mengandung kata paket express dan di cart sudah isPaketExpressExist
+                          if (data.name!
+                                  .toLowerCase()
+                                  .contains('paket express') &&
+                              isPaketExpressExist) {
                             QuickAlert.show(
                               context: context,
-                              type: QuickAlertType.error,
+                              type: QuickAlertType.info,
                               title: "Terjadi Kesalahan",
-                              text: 'Hanya bisa memilih satu Paket saja',
+                              text:
+                                  'Anda cukup menambahkan Paket Express sekali saja',
+                            );
+                            //Jika product yang ditambah adalah mengandung kata paket reguler dan di cart sudah isPaketRegulerExist
+                          } else if (data.name!
+                                  .toLowerCase()
+                                  .contains('paket reguler') &&
+                              isPaketRegulerExist) {
+                            QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.info,
+                              title: "Terjadi Kesalahan",
+                              text:
+                                  'Anda cukup menambahkan Paket Reguler sekali saja',
                             );
                           } else {
                             context

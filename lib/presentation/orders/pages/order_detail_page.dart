@@ -128,7 +128,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 context: context,
                 type: QuickAlertType.info,
                 text:
-                    'Ketika Anda memesan Paket (Reguler/Express) harga paket nya akan tertulis "Coming soon" sebab berat dari paket perlu ditimbang terlebih dahulu oleh Smile Laundry. Harga dan Total Belanja Anda akan muncul ketika paket Anda sudah ditimbang',
+                    'Ketika Anda memesan Paket (Reguler/Express) harga paket nya akan tertulis "Coming soon" sebab berat dari paket perlu ditimbang terlebih dahulu oleh Smile Laundry. Silakan lakukan Checkout terlebih dahulu, agar kami dapat mengupdate Harga dan Total Belanja Anda',
               );
             },
             icon: const Icon(Icons
@@ -150,6 +150,11 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   return const SizedBox();
                 },
                 loaded: (products) {
+                  // Check if products is empty
+                  if (products.isEmpty) {
+                    return const SizedBox();
+                  }
+
                   return ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -338,6 +343,11 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 orElse: () => [],
                 loaded: (products) => products,
               );
+
+              // Check if products is empty
+              if (products.isEmpty) {
+                return const SizedBox();
+              }
 
               return BlocListener<OrderBloc, OrderState>(
                 listener: (context, state) {

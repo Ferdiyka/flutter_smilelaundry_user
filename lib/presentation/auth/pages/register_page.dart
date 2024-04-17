@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,8 +9,8 @@ import '../../../core/components/custom_text_field.dart';
 import '../../../core/core.dart';
 import '../../../core/router/app_router.dart';
 import '../../../data/datasources/auth_local_datasource.dart';
-import '../../../data/models/requests/register_request_model.dart';
 import '../bloc/register/register_bloc.dart';
+import 'verification_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -19,6 +20,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _auth = FirebaseAuth.instance;
   final emailController = TextEditingController();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -38,22 +40,6 @@ class _RegisterPageState extends State<RegisterPage> {
             orElse: () {},
             success: (state) {
               AuthLocalDatasource().saveAuthData(state);
-              QuickAlert.show(
-                context: context,
-                type: QuickAlertType.success,
-                text: 'Berhasil membuat akun!',
-                onConfirmBtnTap: () {
-                  context.goNamed(RouteConstants.login);
-                },
-              );
-            },
-            error: (message) {
-              QuickAlert.show(
-                context: context,
-                type: QuickAlertType.error,
-                title: "Terjadi Kesalahan",
-                text: message,
-              );
             },
           );
         },
@@ -69,6 +55,13 @@ class _RegisterPageState extends State<RegisterPage> {
               CustomTextField(
                 controller: emailController,
                 label: 'Email Address',
+              ),
+              const Text(
+                'Pastikan Anda menggunakan email yang asli',
+                style: TextStyle(
+                  fontSize: 10,
+                ),
+                textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16.0),
               CustomTextField(
@@ -86,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
               state.maybeWhen(
                 orElse: () {
                   return Button.filled(
-                    onPressed: () {
+                    onPressed: () async {
                       // Validasi agar semua input harus diisi sebelum registrasi
                       if (usernameController.text.isEmpty ||
                           emailController.text.isEmpty ||
@@ -98,14 +91,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           type: QuickAlertType.error,
                           title: "Terjadi Kesalahan",
                           text: 'Semua input harus diisi',
-                        );
-                      } else if (!isEmailValid(emailController.text)) {
-                        // Validasi agar email mengandung "@" dan "."
-                        QuickAlert.show(
-                          context: context,
-                          type: QuickAlertType.error,
-                          title: "Terjadi Kesalahan",
-                          text: 'Email tidak valid',
                         );
                       } else {
                         // Validasi agar password dan konfirmasi password sama
@@ -120,15 +105,45 @@ class _RegisterPageState extends State<RegisterPage> {
                                 'Password dan konfirmasi password tidak cocok',
                           );
                         } else {
-                          final dataRequest = RegisterRequestModel(
-                            name: usernameController.text,
-                            email: emailController.text,
-                            password: passwordController.text,
-                          );
+                          try {
+                            // Create the user with Firebase Auth
+                            UserCredential userCredential =
+                                await _auth.createUserWithEmailAndPassword(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
 
-                          context
-                              .read<RegisterBloc>()
-                              .add(RegisterEvent.register(dataRequest));
+                            // Send email verification
+                            await userCredential.user!.sendEmailVerification();
+
+                            // Show success message and navigate to the login page
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => VerificationPage(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  name: usernameController.text,
+                                ),
+                              ),
+                            );
+                          } catch (e) {
+                            // Handle registration error
+                            String errorMessage = 'Terjadi Kesalahan';
+                            if (e is FirebaseAuthException) {
+                              errorMessage = e.message ?? errorMessage;
+                            } else {
+                              errorMessage = e.toString();
+                            }
+
+                            QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.error,
+                              title: "Terjadi Kesalahan",
+                              text: errorMessage,
+                            );
+                          }
                         }
                       }
                     },
@@ -164,11 +179,5 @@ class _RegisterPageState extends State<RegisterPage> {
         },
       ),
     );
-  }
-
-  // Fungsi untuk memeriksa apakah email valid menggunakan RegExp
-  bool isEmailValid(String email) {
-    final RegExp regex = RegExp(r'[@.]');
-    return regex.hasMatch(email);
   }
 }
