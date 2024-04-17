@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -106,28 +108,44 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                         } else {
                           try {
-                            // Create the user with Firebase Auth
-                            UserCredential userCredential =
-                                await _auth.createUserWithEmailAndPassword(
-                              email: emailController.text,
-                              password: passwordController.text,
-                            );
-
-                            // Send email verification
-                            await userCredential.user!.sendEmailVerification();
-
                             // Show success message and navigate to the login page
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => VerificationPage(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  name: usernameController.text,
-                                ),
-                              ),
-                            );
+                            QuickAlert.show(
+                                context: context,
+                                type: QuickAlertType.warning,
+                                title: "Are you sure?",
+                                text:
+                                    "Pastikan email adalah email asli dan sudah benar",
+                                showCancelBtn: true,
+                                onConfirmBtnTap: () async {
+                                  // Create the user with Firebase Auth
+                                  UserCredential userCredential = await _auth
+                                      .createUserWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  );
+                                  // Send email verification
+                                  await userCredential.user!
+                                      .sendEmailVerification();
+                                  QuickAlert.show(
+                                      context: context,
+                                      type: QuickAlertType.success,
+                                      title: "Success",
+                                      text:
+                                          "Email Verification berhasil terkirim",
+                                      onConfirmBtnTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                VerificationPage(
+                                              email: emailController.text,
+                                              password: passwordController.text,
+                                              name: usernameController.text,
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                });
                           } catch (e) {
                             // Handle registration error
                             String errorMessage = 'Terjadi Kesalahan';

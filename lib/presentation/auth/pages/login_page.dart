@@ -76,6 +76,25 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
+          const SpaceHeight(10.0),
+          GestureDetector(
+            onTap: () {
+              // Navigate to the "Forgot Password" screen
+              context.goNamed(RouteConstants.lupaPassword);
+            },
+            child: const Text.rich(
+              TextSpan(
+                text: 'Lupa Password?',
+                children: [
+                  TextSpan(
+                    text: ' Klik disini',
+                    style: TextStyle(color: AppColors.mainColor),
+                  ),
+                ],
+              ),
+              textAlign: TextAlign.right,
+            ),
+          ),
           const SpaceHeight(50.0),
           BlocConsumer<LoginBloc, LoginState>(
             listener: (context, state) {
@@ -99,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                         type: QuickAlertType.error,
                         title: "Terjadi Kesalahan",
                         text:
-                            'Email Anda belum terverifikasi. Silakan cek email Anda2.',
+                            'Email Anda belum terverifikasi. Silakan cek email Anda.',
                       );
                       return;
                     }
@@ -116,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                       type: QuickAlertType.error,
                       title: "Terjadi Kesalahan",
                       text:
-                          "Email Anda belum terverifikasi. Silakan cek email Anda3.",
+                          "Email Anda belum terverifikasi. Silakan cek email Anda.",
                     );
                   }
                 },

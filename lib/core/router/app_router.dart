@@ -8,6 +8,7 @@ import '../../presentation/address/pages/add_address_page.dart';
 import '../../presentation/address/pages/edit_address_page.dart';
 import '../../presentation/address/pages/check_address_page.dart';
 import '../../presentation/auth/pages/login_page.dart';
+import '../../presentation/auth/pages/lupa_password_page.dart';
 import '../../presentation/auth/pages/register_page.dart';
 import '../../presentation/auth/pages/verification_page.dart';
 import '../../presentation/home/pages/dashboard_page.dart';
@@ -45,6 +46,11 @@ class AppRouter {
             name: RouteConstants.register,
             path: RouteConstants.registerPath,
             builder: (context, state) => const RegisterPage(),
+          ),
+          GoRoute(
+            name: RouteConstants.lupaPassword,
+            path: RouteConstants.lupaPasswordPath,
+            builder: (context, state) => ForgotPasswordScreen(),
           ),
         ],
       ),

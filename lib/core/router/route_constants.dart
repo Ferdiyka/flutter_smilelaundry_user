@@ -17,6 +17,10 @@ class RouteConstants {
   static const String register = 'register';
   static const String registerPath = 'register';
 
+  /// route for page [LupaPasswordPage]
+  static const String lupaPassword = 'lupa_password';
+  static const String lupaPasswordPath = 'lupa_password';
+
   /// route for page [VerificationPage]
   static const String verification = 'verification';
   static const String verificationPath = '/verification';
