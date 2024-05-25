@@ -26,10 +26,9 @@ class OrderDetailPage extends StatefulWidget {
 
 class _OrderDetailPageState extends State<OrderDetailPage> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     _reload();
-    context.read<UserBloc>().add(const UserEvent.getUser());
   }
 
   Future<void> _reload() async {

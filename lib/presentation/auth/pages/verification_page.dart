@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters, library_private_types_in_public_api, use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -62,7 +64,7 @@ class _VerificationPageState extends State<VerificationPage>
     super.dispose();
   }
 
-  void _startTimer() {
+  Future<void> _startTimer() async {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (remainingTime > 0) {
         remainingTime--;
@@ -73,29 +75,30 @@ class _VerificationPageState extends State<VerificationPage>
           _timer.cancel();
         }
       }
-
-      User? user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        await user.reload();
-        if (user.emailVerified) {
-          setState(() {
-            isVerified = true;
-          });
-          _timer.cancel();
-          // Navigasi ke halaman home setelah verifikasi email berhasil
-          QuickAlert.show(
-            context: context,
-            type: QuickAlertType.success,
-            text:
-                'Email berhasil diverifikasi!. Silakan login dengan email yang sudah Anda buat',
-            onConfirmBtnTap: () {
-              context.goNamed(RouteConstants.login);
-              _createDataToDatabase();
-            },
-          );
-        }
-      }
     });
+
+    // Pindahkan pengecekan verifikasi email di luar blok Timer.periodic
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await user.reload();
+      if (user.emailVerified) {
+        setState(() {
+          isVerified = true;
+        });
+        _timer.cancel();
+        // Navigasi ke halaman home setelah verifikasi email berhasil
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text:
+              'Email berhasil diverifikasi!. Silakan login dengan email yang sudah Anda buat',
+          onConfirmBtnTap: () {
+            context.goNamed(RouteConstants.login);
+            _createDataToDatabase();
+          },
+        );
+      }
+    }
   }
 
   void _startAnimation() {
@@ -114,7 +117,7 @@ class _VerificationPageState extends State<VerificationPage>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Email verifikasi telah dikirim, silakan cek email Anda termasuk folder spam',
                 textAlign: TextAlign.center,
               ),
@@ -136,7 +139,7 @@ class _VerificationPageState extends State<VerificationPage>
                   child: const Text('Resend Verification Email'),
                 ),
               const SpaceHeight(30.0),
-              Text(
+              const Text(
                 'Pastikan Anda tidak menutup aplikasi ini secara keseluruhan saat melakukan verifikasi email',
                 textAlign: TextAlign.center,
                 style: TextStyle(

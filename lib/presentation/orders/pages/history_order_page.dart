@@ -1,5 +1,6 @@
 // ignore_for_file: use_super_parameters, use_build_context_synchronously
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quickalert/quickalert.dart';
@@ -22,6 +23,18 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
   void initState() {
     super.initState();
     _checkAuthStatus();
+    _subscribeToFCMNotifications();
+  }
+
+  void _subscribeToFCMNotifications() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      _handleFCMNotification();
+    });
+  }
+
+  void _handleFCMNotification() {
+    // Update the HistoryBloc when a notification is received
+    context.read<HistoryBloc>().add(const HistoryEvent.getHistoryOrder());
   }
 
   Future<void> _checkAuthStatus() async {
@@ -31,6 +44,13 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
     } else {
       // Display "No Data"
     }
+  }
+
+  @override
+  void dispose() {
+    // Cancel the FCM notification stream subscription
+    FirebaseMessaging.onMessage.drain();
+    super.dispose();
   }
 
   @override

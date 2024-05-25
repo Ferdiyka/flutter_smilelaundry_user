@@ -5,9 +5,6 @@ import 'package:flutter_smilelaundry_user/data/models/responses/history_order_re
 
 import '../../../core/components/spaces.dart';
 import '../../../core/core.dart';
-// import '../../home/models/product_quantity.dart';
-// import '../models/transaction_model.dart';
-// import '../pages/order_detail_page.dart';
 import 'row_text.dart';
 import 'package:intl/intl.dart';
 

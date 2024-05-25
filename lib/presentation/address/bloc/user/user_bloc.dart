@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,7 +14,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRemoteDatasource userRemoteDatasource;
   UserBloc(
     this.userRemoteDatasource,
-  ) : super(_Initial()) {
+  ) : super(const _Initial()) {
     on<_GetUser>((event, emit) async {
       emit(const _Loading());
       final response = await userRemoteDatasource.getUser();
