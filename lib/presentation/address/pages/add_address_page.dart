@@ -232,12 +232,28 @@ class AddAddressPage extends StatelessWidget {
                                     ),
                                   ),
                                 );
-                            context.goNamed(
-                              RouteConstants.orderDetail,
-                              pathParameters: PathParameters(
-                                rootTab: RootTab.order,
-                              ).toMap(),
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
                             );
+
+                            // Delay sebelum melakukan navigasi
+                            Future.delayed(const Duration(seconds: 2), () {
+                              // Hapus dialog loading
+                              Navigator.of(context).pop();
+
+                              // Navigasi kembali ke OrderDetailPage
+                              context.goNamed(
+                                RouteConstants.orderDetail,
+                                pathParameters: PathParameters(
+                                  rootTab: RootTab.order,
+                                ).toMap(),
+                              );
+                            });
                           },
                         );
                       }

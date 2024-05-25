@@ -28,6 +28,15 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   @override
   void initState() {
     super.initState();
+    context.read<UserBloc>().add(const UserEvent.getUser());
+    _reload();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Panggil getUser() setiap kali ada perubahan dependensi (misalnya, ketika kembali ke halaman ini)
+    context.read<UserBloc>().add(const UserEvent.getUser());
     _reload();
   }
 

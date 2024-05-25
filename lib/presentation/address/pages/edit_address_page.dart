@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -15,13 +13,14 @@ import '../../../data/models/requests/user_request_model.dart';
 import '../bloc/add_address/add_address_bloc.dart';
 import '../bloc/user/user_bloc.dart';
 
-class EditAddressPage extends StatelessWidget {
+class EditAddressPage extends StatefulWidget {
   final String currentAddress;
   final double haversineDistanceText;
   final String manhattanDistanceText;
   final String euclideanDistanceText;
   final double titikLat;
   final double titikLong;
+
   const EditAddressPage({
     Key? key,
     required this.currentAddress,
@@ -30,117 +29,98 @@ class EditAddressPage extends StatelessWidget {
     required this.euclideanDistanceText,
     required this.titikLat,
     required this.titikLong,
-  });
+  }) : super(key: key);
+
+  @override
+  _EditAddressPageState createState() => _EditAddressPageState();
+}
+
+class _EditAddressPageState extends State<EditAddressPage> {
+  late TextEditingController addressController;
+  late TextEditingController noteAddressController;
+  late TextEditingController nameController;
+  late TextEditingController phoneController;
+  late String haversineController;
+  bool _isFieldsInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    addressController = TextEditingController(text: widget.currentAddress);
+    noteAddressController = TextEditingController();
+    nameController = TextEditingController();
+    phoneController = TextEditingController();
+    haversineController = widget.haversineDistanceText.toStringAsFixed(2);
+    context.read<UserBloc>().add(const UserEvent.getUser());
+  }
+
+  @override
+  void dispose() {
+    addressController.dispose();
+    noteAddressController.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final addressController = TextEditingController(text: currentAddress);
-    addressController.selection = TextSelection.fromPosition(
-      TextPosition(offset: addressController.text.length),
-    );
-    final noteAddressController = TextEditingController();
-    final nameController = TextEditingController();
-    final phoneController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Address'),
+        title: const Text('Edit Address'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: [
           const Text(
             'Note: Kami hanya bisa melayani antar-jemput pakaian bagi pelanggan yang berada dalam radius 500 meter dari Smile Laundry',
-            style: TextStyle(
-              fontSize: 14,
-            ),
+            style: TextStyle(fontSize: 14),
             textAlign: TextAlign.justify,
           ),
           const SpaceHeight(24.0),
           const Text(
             'Silakan melakukan pengecekan radius dengan menekan tombol "Check"',
-            style: TextStyle(
-              fontSize: 14,
-            ),
+            style: TextStyle(fontSize: 14),
             textAlign: TextAlign.justify,
           ),
           const SpaceHeight(24.0),
           const Text(
             'GPS',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SpaceHeight(10.0),
-          SizedBox(
-            child: Row(
-              children: [
-                const SizedBox(width: 70.0),
-                Expanded(
-                  child: Button.filled(
-                    onPressed: () {
-                      context.goNamed(
-                        RouteConstants.checkAddress,
-                        pathParameters: PathParameters(
-                          rootTab: RootTab.order,
-                        ).toMap(),
-                      );
-                    },
-                    label: 'Check',
-                    icon: Assets.icons.location.svg(
-                      colorFilter: const ColorFilter.mode(
-                        Colors.black,
-                        BlendMode.srcIn,
-                      ),
+          Row(
+            children: [
+              const SizedBox(width: 70.0),
+              Expanded(
+                child: Button.filled(
+                  onPressed: () {
+                    context.goNamed(
+                      RouteConstants.checkAddress,
+                      pathParameters:
+                          PathParameters(rootTab: RootTab.order).toMap(),
+                    );
+                  },
+                  label: 'Check',
+                  icon: Assets.icons.location.svg(
+                    colorFilter: const ColorFilter.mode(
+                      Colors.black,
+                      BlendMode.srcIn,
                     ),
                   ),
                 ),
-                const SizedBox(width: 70.0),
-              ],
-            ),
+              ),
+              const SizedBox(width: 70.0),
+            ],
           ),
           const SpaceHeight(24.0),
           const Text(
             'Jarak radius lokasi rumahmu dari Smile Laundry: ',
-            style: TextStyle(
-              fontSize: 14,
-            ),
+            style: TextStyle(fontSize: 14),
           ),
           Text(
-            'Haversine Distance: '
-            '${haversineDistanceText.toStringAsFixed(2)}'
-            ' meters',
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            manhattanDistanceText,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            euclideanDistanceText,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            '$titikLat',
-            style: const TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          Text(
-            '$titikLong',
-            style: const TextStyle(
-              fontSize: 14,
-            ),
+            'Haversine Distance: $haversineController meters',
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
           const SpaceHeight(24.0),
           CustomTextField(
@@ -150,9 +130,7 @@ class EditAddressPage extends StatelessWidget {
           ),
           const Text(
             'Alamat akan otomatis terisi dan tidak dapat diedit ketika Anda sudah menekan tombol check',
-            style: TextStyle(
-              fontSize: 10,
-            ),
+            style: TextStyle(fontSize: 10),
             textAlign: TextAlign.justify,
           ),
           const SpaceHeight(24.0),
@@ -175,11 +153,21 @@ class EditAddressPage extends StatelessWidget {
             builder: (context, userState) {
               return userState.maybeWhen(
                 loaded: (user) {
-                  addressController.text = user.address ?? '';
-                  noteAddressController.text = user.noteAddress ?? '';
-                  nameController.text = user.name ?? '';
-                  phoneController.text = user.phone ?? '';
-
+                  if (!_isFieldsInitialized) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (mounted) {
+                        setState(() {
+                          addressController.text = user.address ?? '';
+                          noteAddressController.text = user.noteAddress ?? '';
+                          nameController.text = user.name ?? '';
+                          phoneController.text = user.phone ?? '';
+                          haversineController = user.radius!.toStringAsFixed(2);
+                          _isFieldsInitialized =
+                              true; // Setel _isFieldsInitialized menjadi true setelah diperbarui
+                        });
+                      }
+                    });
+                  }
                   return BlocConsumer<AddAddressBloc, AddAddressState>(
                     listener: (context, state) {
                       state.maybeWhen(
@@ -187,9 +175,8 @@ class EditAddressPage extends StatelessWidget {
                         loaded: () {
                           context.goNamed(
                             RouteConstants.address,
-                            pathParameters: PathParameters(
-                              rootTab: RootTab.order,
-                            ).toMap(),
+                            pathParameters:
+                                PathParameters(rootTab: RootTab.order).toMap(),
                           );
                         },
                       );
@@ -199,7 +186,7 @@ class EditAddressPage extends StatelessWidget {
                         orElse: () {
                           return Button.filled(
                             onPressed: () {
-                              if (haversineDistanceText > 500.00) {
+                              if (widget.haversineDistanceText > 500.00) {
                                 QuickAlert.show(
                                   context: context,
                                   type: QuickAlertType.error,
@@ -229,24 +216,45 @@ class EditAddressPage extends StatelessWidget {
                                               noteAddress:
                                                   noteAddressController.text,
                                               phone: phoneController.text,
-                                              radius: haversineDistanceText != 0
-                                                  ? haversineDistanceText
-                                                  : user.radius,
-                                              latitudeUser: titikLat != 0
-                                                  ? titikLat
+                                              radius:
+                                                  widget.haversineDistanceText !=
+                                                          0
+                                                      ? widget
+                                                          .haversineDistanceText
+                                                      : user.radius,
+                                              latitudeUser: widget.titikLat != 0
+                                                  ? widget.titikLat
                                                   : user.latitudeUser,
-                                              longitudeUser: titikLong != 0
-                                                  ? titikLong
-                                                  : user.longitudeUser,
+                                              longitudeUser:
+                                                  widget.titikLong != 0
+                                                      ? widget.titikLong
+                                                      : user.longitudeUser,
                                             ),
                                           ),
                                         );
-                                    context.goNamed(
-                                      RouteConstants.orderDetail,
-                                      pathParameters: PathParameters(
-                                        rootTab: RootTab.order,
-                                      ).toMap(),
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      },
                                     );
+
+                                    // Delay sebelum melakukan navigasi
+                                    Future.delayed(const Duration(seconds: 2),
+                                        () {
+                                      // Hapus dialog loading
+                                      Navigator.of(context).pop();
+
+                                      // Navigasi kembali ke OrderDetailPage
+                                      context.goNamed(
+                                        RouteConstants.orderDetail,
+                                        pathParameters: PathParameters(
+                                          rootTab: RootTab.order,
+                                        ).toMap(),
+                                      );
+                                    });
                                   },
                                 );
                               }
@@ -254,19 +262,12 @@ class EditAddressPage extends StatelessWidget {
                             label: 'Edit Alamat',
                           );
                         },
-                        loading: () {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
                       );
                     },
                   );
                 },
                 orElse: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const Center(child: CircularProgressIndicator());
                 },
               );
             },

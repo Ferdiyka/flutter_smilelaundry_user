@@ -64,7 +64,7 @@ class _VerificationPageState extends State<VerificationPage>
     super.dispose();
   }
 
-  Future<void> _startTimer() async {
+  void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (remainingTime > 0) {
         remainingTime--;
@@ -72,33 +72,49 @@ class _VerificationPageState extends State<VerificationPage>
           setState(() {
             isExpired = true;
           });
-          _timer.cancel();
+        }
+      }
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await user.reload();
+        if (user.emailVerified) {
+          setState(() {
+            isVerified = true;
+          });
+          _timer
+              .cancel(); // Navigasi ke halaman home setelah verifikasi email berhasil
+          QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            text:
+                'Email berhasil diverifikasi!. Silakan login dengan email yang sudah Anda buat',
+            onConfirmBtnTap: () {
+              context.goNamed(RouteConstants.login);
+              _createDataToDatabase();
+            },
+          );
+        } else if (isExpired) {
+          // Cek verifikasi email meskipun timer sudah habis
+          await user.reload();
+          if (user.emailVerified) {
+            setState(() {
+              isVerified = true;
+            });
+            _timer.cancel();
+            QuickAlert.show(
+              context: context,
+              type: QuickAlertType.success,
+              text:
+                  'Email berhasil diverifikasi!. Silakan login dengan email yang sudah Anda buat',
+              onConfirmBtnTap: () {
+                context.goNamed(RouteConstants.login);
+                _createDataToDatabase();
+              },
+            );
+          }
         }
       }
     });
-
-    // Pindahkan pengecekan verifikasi email di luar blok Timer.periodic
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      await user.reload();
-      if (user.emailVerified) {
-        setState(() {
-          isVerified = true;
-        });
-        _timer.cancel();
-        // Navigasi ke halaman home setelah verifikasi email berhasil
-        QuickAlert.show(
-          context: context,
-          type: QuickAlertType.success,
-          text:
-              'Email berhasil diverifikasi!. Silakan login dengan email yang sudah Anda buat',
-          onConfirmBtnTap: () {
-            context.goNamed(RouteConstants.login);
-            _createDataToDatabase();
-          },
-        );
-      }
-    }
   }
 
   void _startAnimation() {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_smilelaundry_user/presentation/address/bloc/user/user_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/models/responses/product_response_model.dart';
@@ -114,7 +116,10 @@ class AppRouter {
                 GoRoute(
                   name: RouteConstants.orderDetail,
                   path: RouteConstants.orderDetailPath,
-                  builder: (context, state) => const OrderDetailPage(),
+                  builder: (context, state) {
+                    context.read<UserBloc>().add(const UserEvent.getUser());
+                    return const OrderDetailPage();
+                  },
                 ),
                 GoRoute(
                   name: RouteConstants.addAddress,
@@ -133,6 +138,7 @@ class AppRouter {
                         extras?['euclideanDistanceText'] as String? ?? '';
                     final titikLat = extras?['titikLat'] as double? ?? 0.0;
                     final titikLong = extras?['titikLong'] as double? ?? 0.0;
+                    context.read<UserBloc>().add(const UserEvent.getUser());
 
                     return AddAddressPage(
                       currentAddress: currentAddress,
@@ -161,6 +167,8 @@ class AppRouter {
                         extras?['euclideanDistanceText'] as String? ?? '';
                     final titikLat = extras?['titikLat'] as double? ?? 0.0;
                     final titikLong = extras?['titikLong'] as double? ?? 0.0;
+
+                    context.read<UserBloc>().add(const UserEvent.getUser());
 
                     return EditAddressPage(
                       currentAddress: currentAddress,
