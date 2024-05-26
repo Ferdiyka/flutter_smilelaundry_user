@@ -23,32 +23,24 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
   void initState() {
     super.initState();
     _checkAuthStatus();
-    _subscribeToFCMNotifications();
+    _triggerReloadFCM();
   }
 
-  void _subscribeToFCMNotifications() {
+  void _triggerReloadFCM() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      _handleFCMNotification();
+      context.read<HistoryBloc>().add(const HistoryEvent.getHistoryOrder());
     });
-  }
-
-  void _handleFCMNotification() {
-    // Update the HistoryBloc when a notification is received
-    context.read<HistoryBloc>().add(const HistoryEvent.getHistoryOrder());
   }
 
   Future<void> _checkAuthStatus() async {
     final isAuth = await _authLocalDatasource.isAuth();
     if (isAuth) {
       context.read<HistoryBloc>().add(const HistoryEvent.getHistoryOrder());
-    } else {
-      // Display "No Data"
     }
   }
 
   @override
   void dispose() {
-    // Cancel the FCM notification stream subscription
     FirebaseMessaging.onMessage.drain();
     super.dispose();
   }

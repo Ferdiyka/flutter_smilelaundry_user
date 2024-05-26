@@ -134,8 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                       context: context,
                       type: QuickAlertType.error,
                       title: "Terjadi Kesalahan",
-                      text:
-                          "Email Anda belum terverifikasi. Silakan cek email Anda.",
+                      text: "Email atau Password salah",
                     );
                   }
                 },

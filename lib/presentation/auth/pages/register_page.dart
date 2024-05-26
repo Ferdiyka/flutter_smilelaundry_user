@@ -117,16 +117,28 @@ class _RegisterPageState extends State<RegisterPage> {
                                     "Pastikan email adalah email asli dan sudah benar",
                                 showCancelBtn: true,
                                 onConfirmBtnTap: () async {
-                                  // Create the user with Firebase Auth
-                                  UserCredential userCredential = await _auth
-                                      .createUserWithEmailAndPassword(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                  );
-                                  // Send email verification
-                                  await userCredential.user!
-                                      .sendEmailVerification();
                                   QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.loading,
+                                    title: "Loading",
+                                    text: "Please wait...",
+                                    autoCloseDuration:
+                                        const Duration(seconds: 2),
+                                  );
+                                  try {
+                                    // Create the user with Firebase Auth
+                                    UserCredential userCredential = await _auth
+                                        .createUserWithEmailAndPassword(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+
+                                    // Send email verification
+                                    await userCredential.user!
+                                        .sendEmailVerification();
+
+                                    // Tampilkan pesan sukses dan navigasi ke halaman verifikasi
+                                    QuickAlert.show(
                                       context: context,
                                       type: QuickAlertType.success,
                                       title: "Success",
@@ -144,7 +156,17 @@ class _RegisterPageState extends State<RegisterPage> {
                                             ),
                                           ),
                                         );
-                                      });
+                                      },
+                                    );
+                                  } catch (e) {
+                                    // Tangani kesalahan jika ada
+                                    QuickAlert.show(
+                                      context: context,
+                                      type: QuickAlertType.error,
+                                      title: "Error",
+                                      text: e.toString(),
+                                    );
+                                  }
                                 });
                           } catch (e) {
                             // Handle registration error

@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -232,13 +234,13 @@ class _EditAddressPageState extends State<EditAddressPage> {
                                             ),
                                           ),
                                         );
-                                    showDialog(
+                                    QuickAlert.show(
                                       context: context,
-                                      builder: (BuildContext context) {
-                                        return const Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      },
+                                      type: QuickAlertType.loading,
+                                      title: "Loading",
+                                      text: "Please wait...",
+                                      autoCloseDuration:
+                                          const Duration(seconds: 2),
                                     );
 
                                     // Delay sebelum melakukan navigasi

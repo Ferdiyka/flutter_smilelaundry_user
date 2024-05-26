@@ -232,13 +232,12 @@ class AddAddressPage extends StatelessWidget {
                                     ),
                                   ),
                                 );
-                            showDialog(
+                            QuickAlert.show(
                               context: context,
-                              builder: (BuildContext context) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
+                              type: QuickAlertType.loading,
+                              title: "Loading",
+                              text: "Please wait...",
+                              autoCloseDuration: const Duration(seconds: 2),
                             );
 
                             // Delay sebelum melakukan navigasi
